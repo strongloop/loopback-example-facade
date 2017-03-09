@@ -16,7 +16,7 @@ module.exports = function(Account) {
         lastName: 'Simpson',
         customerSince: new Date(),
         address: {
-          stree: '742 Evergreen Terrace '
+          street: '742 Evergreen Terrace',
           lastUpdated: new Date(),
           zip: 95555,
           city: 'Springfield',
