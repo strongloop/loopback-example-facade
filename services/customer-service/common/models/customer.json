@@ -1,0 +1,27 @@
+{
+  "name": "Customer",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "customerNumber": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "ssn": {
+      "type": "string"
+    },
+    "customerSince": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": []
+}

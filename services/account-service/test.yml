@@ -1,0 +1,860 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: account
+basePath: /api
+consumes:
+  - application/json
+  - application/x-www-form-urlencoded
+  - application/xml
+  - text/xml
+produces:
+  - application/json
+  - application/xml
+  - text/xml
+  - application/javascript
+  - text/javascript
+paths:
+  /Accounts:
+    post:
+      tags:
+        - Account
+      summary: Create a new instance of the model and persist it into the data source.
+      operationId: Account.create
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Account'
+      deprecated: false
+    patch:
+      tags:
+        - Account
+      summary: >-
+        Patch an existing model instance or insert a new one into the data
+        source.
+      operationId: Account.patchOrCreate
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Account'
+      deprecated: false
+    put:
+      tags:
+        - Account
+      summary: >-
+        Replace an existing model instance or insert a new one into the data
+        source.
+      operationId: Account.replaceOrCreate__put_Accounts
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Account'
+      deprecated: false
+    get:
+      tags:
+        - Account
+      summary: Find all instances of the model matched by filter from the data source.
+      operationId: Account.find
+      parameters:
+        - name: filter
+          in: query
+          description: >-
+            Filter defining fields, where, include, order, offset, and limit -
+            must be a JSON-encoded string ({"something":"value"})
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Account'
+      deprecated: false
+  /Accounts/replaceOrCreate:
+    post:
+      tags:
+        - Account
+      summary: >-
+        Replace an existing model instance or insert a new one into the data
+        source.
+      operationId: Account.replaceOrCreate__post_Accounts_replaceOrCreate
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Account'
+      deprecated: false
+  /Accounts/upsertWithWhere:
+    post:
+      tags:
+        - Account
+      summary: >-
+        Update an existing model instance or insert a new one into the data
+        source based on the where criteria.
+      operationId: Account.upsertWithWhere
+      parameters:
+        - name: where
+          in: query
+          description: Criteria to match model instances
+          required: false
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: An object of model property name/value pairs
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Account'
+      deprecated: false
+  '/Accounts/{id}/exists':
+    get:
+      tags:
+        - Account
+      summary: Check whether a model instance exists in the data source.
+      operationId: 'Account.exists__get_Accounts_{id}_exists'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              exists:
+                type: boolean
+      deprecated: false
+  '/Accounts/{id}':
+    head:
+      tags:
+        - Account
+      summary: Check whether a model instance exists in the data source.
+      operationId: 'Account.exists__head_Accounts_{id}'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              exists:
+                type: boolean
+      deprecated: false
+    get:
+      tags:
+        - Account
+      summary: 'Find a model instance by {{id}} from the data source.'
+      operationId: Account.findById
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+        - name: filter
+          in: query
+          description: >-
+            Filter defining fields and include - must be a JSON-encoded string
+            ({"something":"value"})
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Account'
+      deprecated: false
+    put:
+      tags:
+        - Account
+      summary: >-
+        Replace attributes for a model instance and persist it into the data
+        source.
+      operationId: 'Account.replaceById__put_Accounts_{id}'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Account'
+      deprecated: false
+    delete:
+      tags:
+        - Account
+      summary: 'Delete a model instance by {{id}} from the data source.'
+      operationId: Account.deleteById
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+      deprecated: false
+    patch:
+      tags:
+        - Account
+      summary: >-
+        Patch attributes for a model instance and persist it into the data
+        source.
+      operationId: Account.prototype.patchAttributes
+      parameters:
+        - name: data
+          in: body
+          description: An object of model property name/value pairs
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+        - name: id
+          in: path
+          description: Account id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Account'
+      deprecated: false
+  '/Accounts/{id}/replace':
+    post:
+      tags:
+        - Account
+      summary: >-
+        Replace attributes for a model instance and persist it into the data
+        source.
+      operationId: 'Account.replaceById__post_Accounts_{id}_replace'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Account'
+      deprecated: false
+  /Accounts/findOne:
+    get:
+      tags:
+        - Account
+      summary: Find first instance of the model matched by filter from the data source.
+      operationId: Account.findOne
+      parameters:
+        - name: filter
+          in: query
+          description: >-
+            Filter defining fields, where, include, order, offset, and limit -
+            must be a JSON-encoded string ({"something":"value"})
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Account'
+      deprecated: false
+  /Accounts/update:
+    post:
+      tags:
+        - Account
+      summary: 'Update instances of the model matched by {{where}} from the data source.'
+      operationId: Account.updateAll
+      parameters:
+        - name: where
+          in: query
+          description: Criteria to match model instances
+          required: false
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: An object of model property name/value pairs
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            description: Information related to the outcome of the operation
+            type: object
+      deprecated: false
+  /Accounts/count:
+    get:
+      tags:
+        - Account
+      summary: Count instances of the model matched by where from the data source.
+      operationId: Account.count
+      parameters:
+        - name: where
+          in: query
+          description: Criteria to match model instances
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              count:
+                type: number
+                format: double
+      deprecated: false
+  /Accounts/change-stream:
+    post:
+      tags:
+        - Account
+      summary: Create a change stream.
+      operationId: Account.createChangeStream__post_Accounts_change-stream
+      parameters:
+        - name: options
+          in: formData
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: file
+      deprecated: false
+    get:
+      tags:
+        - Account
+      summary: Create a change stream.
+      operationId: Account.createChangeStream__get_Accounts_change-stream
+      parameters:
+        - name: options
+          in: query
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: file
+      deprecated: false
+  /AccountSummaries:
+    post:
+      tags:
+        - AccountSummary
+      summary: Create a new instance of the model and persist it into the data source.
+      operationId: AccountSummary.create
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      deprecated: false
+    patch:
+      tags:
+        - AccountSummary
+      summary: >-
+        Patch an existing model instance or insert a new one into the data
+        source.
+      operationId: AccountSummary.patchOrCreate
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      deprecated: false
+    put:
+      tags:
+        - AccountSummary
+      summary: >-
+        Replace an existing model instance or insert a new one into the data
+        source.
+      operationId: AccountSummary.replaceOrCreate__put_AccountSummaries
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      deprecated: false
+    get:
+      tags:
+        - AccountSummary
+      summary: Find all instances of the model matched by filter from the data source.
+      operationId: AccountSummary.find
+      parameters:
+        - name: filter
+          in: query
+          description: >-
+            Filter defining fields, where, include, order, offset, and limit -
+            must be a JSON-encoded string ({"something":"value"})
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AccountSummary'
+      deprecated: false
+  /AccountSummaries/replaceOrCreate:
+    post:
+      tags:
+        - AccountSummary
+      summary: >-
+        Replace an existing model instance or insert a new one into the data
+        source.
+      operationId: AccountSummary.replaceOrCreate__post_AccountSummaries_replaceOrCreate
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      deprecated: false
+  /AccountSummaries/upsertWithWhere:
+    post:
+      tags:
+        - AccountSummary
+      summary: >-
+        Update an existing model instance or insert a new one into the data
+        source based on the where criteria.
+      operationId: AccountSummary.upsertWithWhere
+      parameters:
+        - name: where
+          in: query
+          description: Criteria to match model instances
+          required: false
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: An object of model property name/value pairs
+          required: false
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      deprecated: false
+  '/AccountSummaries/{id}/exists':
+    get:
+      tags:
+        - AccountSummary
+      summary: Check whether a model instance exists in the data source.
+      operationId: 'AccountSummary.exists__get_AccountSummaries_{id}_exists'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              exists:
+                type: boolean
+      deprecated: false
+  '/AccountSummaries/{id}':
+    head:
+      tags:
+        - AccountSummary
+      summary: Check whether a model instance exists in the data source.
+      operationId: 'AccountSummary.exists__head_AccountSummaries_{id}'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              exists:
+                type: boolean
+      deprecated: false
+    get:
+      tags:
+        - AccountSummary
+      summary: 'Find a model instance by {{id}} from the data source.'
+      operationId: AccountSummary.findById
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+        - name: filter
+          in: query
+          description: >-
+            Filter defining fields and include - must be a JSON-encoded string
+            ({"something":"value"})
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      deprecated: false
+    put:
+      tags:
+        - AccountSummary
+      summary: >-
+        Replace attributes for a model instance and persist it into the data
+        source.
+      operationId: 'AccountSummary.replaceById__put_AccountSummaries_{id}'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      deprecated: false
+    delete:
+      tags:
+        - AccountSummary
+      summary: 'Delete a model instance by {{id}} from the data source.'
+      operationId: AccountSummary.deleteById
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+      deprecated: false
+    patch:
+      tags:
+        - AccountSummary
+      summary: >-
+        Patch attributes for a model instance and persist it into the data
+        source.
+      operationId: AccountSummary.prototype.patchAttributes
+      parameters:
+        - name: data
+          in: body
+          description: An object of model property name/value pairs
+          required: false
+          schema:
+            $ref: '#/definitions/AccountSummary'
+        - name: id
+          in: path
+          description: AccountSummary id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      deprecated: false
+  '/AccountSummaries/{id}/replace':
+    post:
+      tags:
+        - AccountSummary
+      summary: >-
+        Replace attributes for a model instance and persist it into the data
+        source.
+      operationId: 'AccountSummary.replaceById__post_AccountSummaries_{id}_replace'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      deprecated: false
+  /AccountSummaries/findOne:
+    get:
+      tags:
+        - AccountSummary
+      summary: Find first instance of the model matched by filter from the data source.
+      operationId: AccountSummary.findOne
+      parameters:
+        - name: filter
+          in: query
+          description: >-
+            Filter defining fields, where, include, order, offset, and limit -
+            must be a JSON-encoded string ({"something":"value"})
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      deprecated: false
+  /AccountSummaries/update:
+    post:
+      tags:
+        - AccountSummary
+      summary: 'Update instances of the model matched by {{where}} from the data source.'
+      operationId: AccountSummary.updateAll
+      parameters:
+        - name: where
+          in: query
+          description: Criteria to match model instances
+          required: false
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: An object of model property name/value pairs
+          required: false
+          schema:
+            $ref: '#/definitions/AccountSummary'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            description: Information related to the outcome of the operation
+            type: object
+      deprecated: false
+  /AccountSummaries/count:
+    get:
+      tags:
+        - AccountSummary
+      summary: Count instances of the model matched by where from the data source.
+      operationId: AccountSummary.count
+      parameters:
+        - name: where
+          in: query
+          description: Criteria to match model instances
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              count:
+                type: number
+                format: double
+      deprecated: false
+  /AccountSummaries/change-stream:
+    post:
+      tags:
+        - AccountSummary
+      summary: Create a change stream.
+      operationId: AccountSummary.createChangeStream__post_AccountSummaries_change-stream
+      parameters:
+        - name: options
+          in: formData
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: file
+      deprecated: false
+    get:
+      tags:
+        - AccountSummary
+      summary: Create a change stream.
+      operationId: AccountSummary.createChangeStream__get_AccountSummaries_change-stream
+      parameters:
+        - name: options
+          in: query
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: file
+      deprecated: false
+definitions:
+  Account:
+    properties:
+      customerNumber:
+        type: string
+      id:
+        type: number
+        format: double
+    required:
+      - customerNumber
+    additionalProperties: false
+  x-any:
+    properties: {}
+  AccountSummary:
+    properties:
+      accountNumber:
+        type: string
+      customerNumber:
+        type: string
+      balance:
+        type: number
+        format: double
+      branch:
+        type: string
+      type:
+        type: string
+      avgBalance:
+        type: number
+        format: double
+      minimumBalance:
+        type: number
+        format: double
+      id:
+        type: number
+        format: double
+    required:
+      - accountNumber
+    additionalProperties: false
+tags:
+  - name: Account
+  - name: AccountSummary
