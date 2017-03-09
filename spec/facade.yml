@@ -1,0 +1,16 @@
+swagger: "2.0"
+info:
+  title: Facade
+  version: v1
+produces:
+  - application/json
+consumes:
+- application/json
+paths:
+  /vitals:
+    get: 
+  /account:
+    get:
+      params: 
+       account-number
+       customer-number

@@ -1,0 +1,89 @@
+{
+  "name": "Account",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "accountNumber": {
+      "type": "string",
+      "required": true
+    },
+    "customerNumber": {
+      "type": "string",
+      "required": true
+    },
+    "balance": {
+      "type": "number",
+      "required": true
+    },
+    "transactions": {
+      "type": [
+        "object"
+      ],
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "getAccountSummary": {
+      "accepts": [
+        {
+          "arg": "accountNumber",
+          "type": "string",
+          "required": true,
+          "description": "The account number for the summary",
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "summary",
+          "type": "object",
+          "root": true,
+          "description": "The account summary"
+        }
+      ],
+      "description": "Get a summary of the recent transactions and other account / customer information.",
+      "http": [
+        {
+          "path": "/summary",
+          "verb": "get"
+        }
+      ]
+    },
+    "listAllAccounts": {
+      "accepts": [
+        {
+          "arg": "customerNumber",
+          "type": "string",
+          "required": true,
+          "description": "The customer",
+          "http": {
+            "source": "path"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "accountList",
+          "type": "array",
+          "root": true,
+          "description": "The list of accountNumbers"
+        }
+      ],
+      "description": "List all the accounts for the given customerNumber",
+      "http": [
+        {
+          "path": "/:customerNumber",
+          "verb": "get"
+        }
+      ]
+    }
+  }
+}
