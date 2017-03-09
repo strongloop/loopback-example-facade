@@ -1,0 +1,34 @@
+{
+  "name": "AccountSummary",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "accountNumber": {
+      "type": "string",
+      "required": true
+    },
+    "customerNumber": {
+      "type": "string"
+    },
+    "balance": {
+      "type": "number"
+    },
+    "branch": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "avgBalance":  {
+      "type": "number"
+    },
+    "minimumBalance":  {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": []
+}

@@ -1,0 +1,439 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: customer
+basePath: /api
+consumes:
+  - application/json
+  - application/x-www-form-urlencoded
+  - application/xml
+  - text/xml
+produces:
+  - application/json
+  - application/xml
+  - text/xml
+  - application/javascript
+  - text/javascript
+paths:
+  /Customers:
+    post:
+      tags:
+        - Customer
+      summary: Create a new instance of the model and persist it into the data source.
+      operationId: Customer.create
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Customer'
+      deprecated: false
+    patch:
+      tags:
+        - Customer
+      summary: >-
+        Patch an existing model instance or insert a new one into the data
+        source.
+      operationId: Customer.patchOrCreate
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Customer'
+      deprecated: false
+    put:
+      tags:
+        - Customer
+      summary: >-
+        Replace an existing model instance or insert a new one into the data
+        source.
+      operationId: Customer.replaceOrCreate__put_Customers
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Customer'
+      deprecated: false
+    get:
+      tags:
+        - Customer
+      summary: Find all instances of the model matched by filter from the data source.
+      operationId: Customer.find
+      parameters:
+        - name: filter
+          in: query
+          description: >-
+            Filter defining fields, where, include, order, offset, and limit -
+            must be a JSON-encoded string ({"something":"value"})
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Customer'
+      deprecated: false
+  /Customers/replaceOrCreate:
+    post:
+      tags:
+        - Customer
+      summary: >-
+        Replace an existing model instance or insert a new one into the data
+        source.
+      operationId: Customer.replaceOrCreate__post_Customers_replaceOrCreate
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Customer'
+      deprecated: false
+  /Customers/upsertWithWhere:
+    post:
+      tags:
+        - Customer
+      summary: >-
+        Update an existing model instance or insert a new one into the data
+        source based on the where criteria.
+      operationId: Customer.upsertWithWhere
+      parameters:
+        - name: where
+          in: query
+          description: Criteria to match model instances
+          required: false
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: An object of model property name/value pairs
+          required: false
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Customer'
+      deprecated: false
+  '/Customers/{id}/exists':
+    get:
+      tags:
+        - Customer
+      summary: Check whether a model instance exists in the data source.
+      operationId: 'Customer.exists__get_Customers_{id}_exists'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              exists:
+                type: boolean
+      deprecated: false
+  '/Customers/{id}':
+    head:
+      tags:
+        - Customer
+      summary: Check whether a model instance exists in the data source.
+      operationId: 'Customer.exists__head_Customers_{id}'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              exists:
+                type: boolean
+      deprecated: false
+    get:
+      tags:
+        - Customer
+      summary: 'Find a model instance by {{id}} from the data source.'
+      operationId: Customer.findById
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+        - name: filter
+          in: query
+          description: >-
+            Filter defining fields and include - must be a JSON-encoded string
+            ({"something":"value"})
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Customer'
+      deprecated: false
+    put:
+      tags:
+        - Customer
+      summary: >-
+        Replace attributes for a model instance and persist it into the data
+        source.
+      operationId: 'Customer.replaceById__put_Customers_{id}'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Customer'
+      deprecated: false
+    delete:
+      tags:
+        - Customer
+      summary: 'Delete a model instance by {{id}} from the data source.'
+      operationId: Customer.deleteById
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+      deprecated: false
+    patch:
+      tags:
+        - Customer
+      summary: >-
+        Patch attributes for a model instance and persist it into the data
+        source.
+      operationId: Customer.prototype.patchAttributes
+      parameters:
+        - name: data
+          in: body
+          description: An object of model property name/value pairs
+          required: false
+          schema:
+            $ref: '#/definitions/Customer'
+        - name: id
+          in: path
+          description: Customer id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Customer'
+      deprecated: false
+  '/Customers/{id}/replace':
+    post:
+      tags:
+        - Customer
+      summary: >-
+        Replace attributes for a model instance and persist it into the data
+        source.
+      operationId: 'Customer.replaceById__post_Customers_{id}_replace'
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Customer'
+      deprecated: false
+  /Customers/findOne:
+    get:
+      tags:
+        - Customer
+      summary: Find first instance of the model matched by filter from the data source.
+      operationId: Customer.findOne
+      parameters:
+        - name: filter
+          in: query
+          description: >-
+            Filter defining fields, where, include, order, offset, and limit -
+            must be a JSON-encoded string ({"something":"value"})
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Customer'
+      deprecated: false
+  /Customers/update:
+    post:
+      tags:
+        - Customer
+      summary: 'Update instances of the model matched by {{where}} from the data source.'
+      operationId: Customer.updateAll
+      parameters:
+        - name: where
+          in: query
+          description: Criteria to match model instances
+          required: false
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          description: An object of model property name/value pairs
+          required: false
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            description: Information related to the outcome of the operation
+            type: object
+      deprecated: false
+  /Customers/count:
+    get:
+      tags:
+        - Customer
+      summary: Count instances of the model matched by where from the data source.
+      operationId: Customer.count
+      parameters:
+        - name: where
+          in: query
+          description: Criteria to match model instances
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              count:
+                type: number
+                format: double
+      deprecated: false
+  /Customers/change-stream:
+    post:
+      tags:
+        - Customer
+      summary: Create a change stream.
+      operationId: Customer.createChangeStream__post_Customers_change-stream
+      parameters:
+        - name: options
+          in: formData
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: file
+      deprecated: false
+    get:
+      tags:
+        - Customer
+      summary: Create a change stream.
+      operationId: Customer.createChangeStream__get_Customers_change-stream
+      parameters:
+        - name: options
+          in: query
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: file
+      deprecated: false
+definitions:
+  Customer:
+    properties:
+      customerNumber:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      ssn:
+        type: string
+      customerSince:
+        type: string
+      id:
+        type: number
+        format: double
+    additionalProperties: false
+  x-any:
+    properties: {}
+tags:
+  - name: Customer
