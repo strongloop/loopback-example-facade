@@ -1,0 +1,35 @@
+version: '3'
+services:
+  facade:
+    build: ./services/facade
+    image: loopback-example-facade/facade
+    ports:
+      - "3000:80"
+    links:
+      - customer
+    networks:
+      app-net:
+        aliases:
+          - facade
+          - account-service
+  customer:
+    build: ./services/customer-service
+    image: loopback-example-facade/customer-service
+    ports:
+      - "3001:80"
+    networks:
+      app-net:
+        aliases:
+          - customer
+  account:
+    build: ./services/account-service
+    image: loopback-example-facade/account-service
+    ports:
+      - "3002:80"
+    networks:
+      app-net:
+        aliases:
+          - account-service
+networks:
+  app-net:
+    driver: bridge

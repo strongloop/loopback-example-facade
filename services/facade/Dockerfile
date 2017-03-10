@@ -1,0 +1,15 @@
+FROM node:6.9
+
+# Create app directory
+RUN mkdir -p /usr/src/facade
+WORKDIR /usr/src/facade
+
+# Install app dependencies
+COPY package.json /usr/src/facade
+RUN npm install
+
+# Bundle app source
+COPY . /usr/src/facade
+
+EXPOSE 3000
+CMD [ "node", "." ]

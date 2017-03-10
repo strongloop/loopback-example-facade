@@ -1,0 +1,15 @@
+FROM node:6.9
+
+# Create app directory
+RUN mkdir -p /usr/src/account-service
+WORKDIR /usr/src/account-service
+
+# Install app dependencies
+COPY package.json /usr/src/account-service
+RUN npm install
+
+# Bundle app source
+COPY . /usr/src/account-service
+
+EXPOSE 3000
+CMD [ "node", "." ]
