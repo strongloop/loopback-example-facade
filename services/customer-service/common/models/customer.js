@@ -1,7 +1,7 @@
 module.exports = function(Customer) {
   Customer.on('dataSourceAttached', function() {
     Customer.find = function(filter, options, cb) {
-      cb(null, new Customer({
+      cb(null, [new Customer({
         firstName: 'Homer',
         lastName: 'Simpson',
         customerSince: new Date(),
@@ -12,7 +12,7 @@ module.exports = function(Customer) {
           city: 'Springfield',
           state: 'OR'
         }
-      }));
+      })]);
     }
   });
 }

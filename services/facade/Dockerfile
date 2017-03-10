@@ -4,6 +4,8 @@ FROM node:6.9
 RUN mkdir -p /usr/src/facade
 WORKDIR /usr/src/facade
 
+ENV DEBUG loopback:connector:swagger
+
 # Install app dependencies
 COPY package.json /usr/src/facade
 RUN npm install

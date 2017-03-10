@@ -1,0 +1,12 @@
+{
+    "customer": {
+        "name": "customer",
+        "connector": "swagger",
+        "spec": "http://customer/explorer/swagger.json",
+        "security": {
+          "type" : "basic",
+          "username": "the user name",
+          "password": "thepassword"
+        }
+    }
+}

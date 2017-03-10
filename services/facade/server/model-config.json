@@ -16,5 +16,9 @@
   "Account": {
     "dataSource": null,
     "public": true
+  },
+  "Customer": {
+    "dataSource": "customer",
+    "public": false
   }
 }

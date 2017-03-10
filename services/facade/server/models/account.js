@@ -1,8 +1,28 @@
 'use strict';
 
 module.exports = function(Account) {
-  Account.getAccountSummary = function(accountNumber) {
-    return Promise.resolve(new Account({
+  Account.getAccountSummary = function(accountNumber, cb) {
+    let Customer = Account.app.models.Customer;
+
+    Customer.dataSource.connector.client.Customer['Customer_find']({}, function(result) {
+      cb(null, result.obj);
+    });
+  }
+
+  Account.listAllAccounts = function(customerNumber) {
+    return Promise.resolve([
+      Math.random().toString().split('.')[1],
+      Math.random().toString().split('.')[1],
+      Math.random().toString().split('.')[1],
+      Math.random().toString().split('.')[1],
+      Math.random().toString().split('.')[1]
+    ]);
+  };
+};
+
+
+/*
+return Promise.resolve(new Account({
       accountNumber: accountNumber,
       accountInfo: {
         avgBalance: 398.93,
@@ -32,15 +52,4 @@ module.exports = function(Account) {
       ],
       balance: 85.84
     }));
-  }
-
-  Account.listAllAccounts = function(customerNumber) {
-    return Promise.resolve([
-      Math.random().toString().split('.')[1],
-      Math.random().toString().split('.')[1],
-      Math.random().toString().split('.')[1],
-      Math.random().toString().split('.')[1],
-      Math.random().toString().split('.')[1]
-    ]);
-  };
-};
+*/
