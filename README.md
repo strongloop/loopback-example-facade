@@ -6,13 +6,19 @@ $ cd loopback-example-facade
 $ docker-compose up --build
 ```
 
+
+## About
+
 In this example, we create "Nano Bank" (a basic banking
 application) to demonstrate best practices for writing scalable Microservices using LoopBack.
 
+### Application Architecture
+
 ![Application Architecture](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-arch.png)
 
-Each user type has permission to perform tasks based on their role and the
-application's ACL (access control list) entries.
+### Caching
+
+![Caching](https://github.com/strongloop/loopback-example-facade/blob/master/doc/request-caching.png)
 
 ## Prerequisites
 
