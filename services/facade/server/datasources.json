@@ -1,12 +1,15 @@
-{
+{   "db": {
+        "name": "db",
+        "connector": "memory"
+    },
     "customer": {
         "name": "customer",
         "connector": "swagger",
-        "spec": "http://customer/explorer/swagger.json",
-        "security": {
-          "type" : "basic",
-          "username": "the user name",
-          "password": "thepassword"
-        }
+        "spec": "http://customer/explorer/swagger.json"
+    },
+    "account": {
+        "name": "account",
+        "connector": "swagger",
+        "spec": "http://account/explorer/swagger.json"
     }
 }

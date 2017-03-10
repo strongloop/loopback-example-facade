@@ -1,6 +1,5 @@
 {
   "name": "Account",
-  "base": "Model",
   "idInjection": true,
   "options": {
     "validateUpsert": true
