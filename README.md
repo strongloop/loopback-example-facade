@@ -20,6 +20,25 @@ application) to demonstrate best practices for writing scalable Microservices us
 
 ![Caching](https://github.com/strongloop/loopback-example-facade/blob/master/doc/request-caching.png)
 
+ - How does the cache work in a simple code example?
+ - Two approaches to caching:
+  - public / shared - cache shared between facade and microservice
+  - private - one cache per facade or microservice
+  - how to choose?
+   - coupling vs isolation
+   - what happens when a shared cache goes down?
+  - from bottom layer to top: 
+   - as you go up, the caching becomes more aggressive
+  - microservices should have their own simple private caches
+   - developed by multiple teams
+   - should be isolated
+  - facade and gateway should share a public cache and aggressively cache data
+  - ttl
+   - data that doesn't change often should be cached with a ttl that reflects a longer time / usage
+   - data that changes often should be cached with a shorter ttl
+  - consistency (only in SoR) vs highly dynamic (only in cache)
+    - what makes it hard is the grey area in between 
+
 ### Health
 
 ![Health](https://github.com/strongloop/loopback-example-facade/blob/master/doc/health.png)
