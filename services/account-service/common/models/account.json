@@ -1,10 +1,15 @@
 {
   "name": "Account",
-  "idInjection": true,
+  "idInjection": false,
   "options": {
     "validateUpsert": true
   },
   "properties": {
+    "accountNumber": {
+      "type": "string",
+      "id": true,
+      "required": true
+    },
     "customerNumber": {
       "type": "string",
       "required": true

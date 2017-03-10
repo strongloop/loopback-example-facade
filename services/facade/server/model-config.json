@@ -14,7 +14,7 @@
     ]
   },
   "Account": {
-    "dataSource": "db",
+    "dataSource": null,
     "public": true
   }
 }

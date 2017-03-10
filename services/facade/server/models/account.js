@@ -31,4 +31,12 @@ module.exports = function(Account) {
       });
     });
   }
+
+  Account.listAllAccounts = function(customerNumber, cb) {
+    let findAccount = accountService.getFunction('Account', 'find');
+    findAccount({}, function(err, account) {
+      if (err) return cb(err);
+      cb(null, account.obj);
+    });
+  };
 };
