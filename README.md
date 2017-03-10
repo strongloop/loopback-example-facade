@@ -20,6 +20,10 @@ application) to demonstrate best practices for writing scalable Microservices us
 
 ![Caching](https://github.com/strongloop/loopback-example-facade/blob/master/doc/request-caching.png)
 
+### Health
+
+![Health](https://github.com/strongloop/loopback-example-facade/blob/master/doc/health.png)
+
 ## Prerequisites
 
 ### Docker
