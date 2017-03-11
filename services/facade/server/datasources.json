@@ -11,5 +11,10 @@
         "name": "account",
         "connector": "swagger",
         "spec": "http://account/explorer/swagger.json"
+    },
+    "transaction": {
+        "name": "transaction",
+        "connector": "swagger",
+        "spec": "http://transaction/explorer/swagger.json"
     }
 }

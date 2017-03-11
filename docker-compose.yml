@@ -30,6 +30,16 @@ services:
       app-net:
         aliases:
           - account-service
+  transaction:
+    build: ./services/transaction-service
+    image: loopback-example-facade/transaction-service
+    ports:
+      - "3003:80"
+    networks:
+      app-net:
+        aliases:
+          - transaction-service
+          
 networks:
   app-net:
     driver: bridge
