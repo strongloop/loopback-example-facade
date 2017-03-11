@@ -27,6 +27,36 @@
       "required": true
     }
   },
+  "methods": {
+    "queryByAccount": {
+      "accepts": [
+        {
+          "arg": "accountNumber",
+          "type": "string",
+          "required": true,
+          "description": "account number",
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "transactions",
+          "type": "object",
+          "root": true,
+          "description": "The transaction list"
+        }
+      ],
+      "description": "list of transactions on the account",
+      "http": [
+        {
+          "path": "/account",
+          "verb": "get"
+        }
+      ]
+    }
+  },
   "validations": [],
   "relations": {},
   "acls": []
