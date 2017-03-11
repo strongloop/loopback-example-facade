@@ -1,5 +1,6 @@
 {
   "name": "Account",
+  "base": "Model",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -51,7 +52,7 @@
       "description": "Get a summary of the recent transactions and other account / customer information.",
       "http": [
         {
-          "path": "/summary",
+          "path": "/:accountNumber",
           "verb": "get"
         }
       ]
