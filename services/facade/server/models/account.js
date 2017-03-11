@@ -26,6 +26,13 @@ module.exports = function(Account) {
       .then(function(data) {
         console.log(data);
         accountSummary.customer = data.obj;
+      })
+      .then(function() {
+        return findTransaction({id: accountNumber, accountNumber: accountNumber})
+      })
+      .then(function(data) {
+        console.log(data);
+        accountSummary.transactions = data.obj;
         return accountSummary;
       });
   }
@@ -48,7 +55,7 @@ module.exports = function(Account) {
   });
 
   function findTransaction(input) {
-    let find = transactionService.getFunction('Transaction', 'findById');
+    let find = transactionService.getFunction('Transaction', 'queryByAccount');
     return new Promise(function (resolve, reject) {
       find(input, function(err, data) {
         if (err) return reject(new Error(err));
