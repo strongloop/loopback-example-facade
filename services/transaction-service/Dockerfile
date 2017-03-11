@@ -1,0 +1,15 @@
+FROM node:6.9
+
+# Create app directory
+RUN mkdir -p /usr/src/transaction-service
+WORKDIR /usr/src/transaction-service
+
+# Install app dependencies
+COPY package.json /usr/src/transaction-service
+RUN npm install
+
+# Bundle app source
+COPY . /usr/src/transaction-service
+
+EXPOSE 3000
+CMD [ "node", "." ]
