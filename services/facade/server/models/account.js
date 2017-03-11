@@ -3,13 +3,15 @@
 const app = require('../server');
 
 module.exports = function(Account) {
-  let accountService, customerService;
+  let accountService, customerService, transactionService;
 
   app.on('started', function() {
     customerService = app.dataSources.Customer;
     accountService = app.dataSources.Account;
+    transactionService = app.dataSources.Transaction;
     customerService.getFunction = getFunction;
     accountService.getFunction = getFunction;
+    transactionService.getFunction = getFunction;
   });
 
   function getFunction(model, method) {
@@ -18,16 +20,21 @@ module.exports = function(Account) {
   }
 
   Account.getAccountSummary = function(accountNumber, cb) {
-    let findCustomer = customerService.getFunction('Customer', 'find');
-    let findAccount = accountService.getFunction('Account', 'find');
-    const accountSummary = {};
-    findCustomer({}, function(err, customer) {
+    let findCustomer = customerService.getFunction('Customer', 'findById');
+    let findAccount = accountService.getFunction('Account', 'findById');
+    let findAccountSummary = accountService.getFunction('AccountSummary', 'findById');
+    let findTransaction = transactionService.getFunction('Transaction', 'findById');
+    findAccountSummary({id: accountNumber, accountNumber: accountNumber}, function(err, accountSummary) {
       if (err) return cb(err);
-      findAccount({}, function(err, account) {
+      accountSummary = accountSummary.obj;
+      findAccount({id: accountNumber, accountNumber: accountNumber}, function(err, account) {
         if (err) return cb(err);
-        accountSummary.customer = customer.obj;
-        accountSummary.account = account.obj;
-        cb(null, accountSummary);
+        findCustomer({id: account.obj.customerNumber, customerNumber: account.obj.customerNumber}, function(err, customer) {
+          if (err) return cb(err);
+          accountSummary.customer = customer.obj;
+          accountSummary.account = account.obj;
+          cb(null, accountSummary);
+        });
       });
     });
   }
