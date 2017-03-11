@@ -12,27 +12,95 @@ $ docker-compose up --build
 In this example, we create "Nano Bank" (a basic banking
 application) to demonstrate best practices for writing scalable Microservices using LoopBack.
 
-### Application Architecture
+### Microservice Architecture
+
+> "a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API"
+> - [Martin Fowler (on Microservices)](https://martinfowler.com/articles/microservices.html)
+
+In the diagram below, you can see the basic application architecture of the **Nano Bank** application.
+
+ - **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications
+ - **Facade** - The public facing interface for the application (aka API) that orchestrates the discrete Microservices
+ - **Microservices** - The individual units of business logic and encapsulate complex legacy Services of Record and other internal core banking services
+ - **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that implement service oriented (SoA) behavior
+ - **Systems of Record** - Databases, mainframes, and other information systems abstracted by simple micro services 
 
 ![Application Architecture](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-arch.png)
 
+There are three key principals to this design:
+
+**1) One way dependencies**
+
+Each arrow represents the direction of coupling. Eg. the facade must know about the Account service API, but not the other way around. Microservices should depend on the facade, more on why below.
+
+**2) Purposeful Interfaces**
+
+The facade should act as the mediator, orchestrator and aggregator. It should do so in a way that treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs that are purpose designed, allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences.
+
+**3) Simple and Isolated Microservices**
+
+The facade pattern used in this example allows for each service to be simple and focused. In this case on interacting with data in a reliable and scalable way. This doesn't mean the facade itself should be complex. It shouldn't include any business logic, only enough logic to provide purpose specific interfaces.
+
 ### Caching
+
+This example demonstrates two styles of Microservice caching. **Public** - sharing a cache between multiple services and **Private** - isolated caching, one cache per service.
 
 ![Caching](https://github.com/strongloop/loopback-example-facade/blob/master/doc/request-caching.png)
 
- - How does the cache work in a simple code example?
- - Two approaches to caching:
-  - public / shared - cache shared between facade and microservice
-  - private - one cache per facade or microservice
-  - how to choose?
-   - coupling vs isolation
-   - what happens when a shared cache goes down?
-  - from bottom layer to top: 
-   - as you go up, the caching becomes more aggressive
-  - microservices should have their own simple private caches
-   - developed by multiple teams
-   - should be isolated
-  - facade and gateway should share a public cache and aggressively cache data
+**How to choose which style of cache to use?**
+
+In the diagram above you can see where each type of caching is appropriate. As requests flow from top to bottom, caching should become less aggressive. At the lower layers, data consistency is more important than performance. At the higher levels, eg. the facade and API gateway, caching can be much more aggressive. As mentioned above, the facade layer should not have any business logic. This means data at this layer does not have the same consistency requirements as data in the lower tiers.
+
+Microservices should be isolated. When possible this should be applied to their dependencies, in this case their cache. Isolation allows you to develop services independently and quickly. Rebuilding services becomes much simpler this way, since there aren't shared contracts for a shared cache.
+
+**Public Cache Example**
+
+
+DataPower Assembly (API Gateway)
+
+```yaml
+- invoke:
+  title: Get quote for given symbol
+  target-url: WXS://grid/read?key=/symbols/{symbol}
+```
+
+LoopBack Application (Facade)
+
+```js
+const messageBroker = new Client(connectionInfo, Adapter); // strong-pubsub
+messageBroker.subscribe('/symbols/*');
+messageBroker.on('message', setPriceForSymbol);
+
+function setPriceForSymbol(topic, price) {
+  Cache.set(topic, price);
+}
+```
+
+The example above demonstrates the Facade and API Gateway sharing the same cache to allow the gateway to access dynamic data (stock prices changing) without the cost of an extra HTTP request.
+
+**Private Cache Example**
+```js
+// server/mixins/cache-queries.js
+module.exports = function(Model, options) {
+  CachedModel.on('dataAccessConfigured', function() {
+    const Model = this;
+    Model._findLive = CachedModel.find;
+    Model.find = async (filter, options) => {
+      const key = getKeyForFilter(filter);
+      var cached = await Cache.get(key);
+      if (cached) 
+        return Promise.resolve(cached);
+      else
+        return Model._findLive(filter, options);
+    };
+  });
+};
+```
+
+The private cache example, demonstrates a simple caching layer for an individual microservice. The details of `getKeyForFilter`, how the cached data is stored (eg. JSON) and all other concerns need to be understood only by this service.
+
+**TTL**
+
   - ttl
    - data that doesn't change often should be cached with a ttl that reflects a longer time / usage
    - data that changes often should be cached with a shorter ttl
