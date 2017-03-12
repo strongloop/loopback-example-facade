@@ -42,22 +42,122 @@ The facade should act as the mediator, simple orchestrator and aggregator. It sh
 
 Microservices represent the integration layer for the disparate backend systems. These systems often hold correlated data which may lead to data integrity issues and inconsistencies in business processes. Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
 
-### High Level Design
+## High Level Design
 
-#### Facade 
+### Facade 
 
-**Accounts API:**
+* **Accounts API:**
 Provides models for users to create and query all types of bank accounts
-  >> POST: /RetailBanking/Accounts `AccountType = "Savings", "Checking"`
-     POST: /Wholesale/Accounts  `AccountType = "Pension", "International"`
-     POST: /Commercial/Accounts `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
-     POST: /Loan/Accounts `AccountType = "Mortgage", "Personal"`
-     ```
-     {
-       "AccountType": "string",
-       "CustomerNumber": "string"
-     }
-     ```
+ * before creating an account it calls the account number generator
+ * Any cash deposit will be preceded by checking a CashMonitoringReport microservice
+
+ * URLs:
+ 
+   - POST: /RetailBanking/Accounts`  ` `AccountType = "Savings", "Checking"`
+   - GET:  /RetailBanking/Accounts ?AccountNumber=
+   - POST: /Wholesale/Accounts`      ` `AccountType = "Pension", "International"`
+   - GET:  /Wholesale/Accounts ?AccountNumber=
+   - POST: /Commercial/Accounts`     ` `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
+   - GET:  /Commercial/Accounts ?AccountNumber=
+   - POST: /Loan/Accounts`           ` `AccountType = "Mortgage", "Personal"`
+   - GET:  /Loan/Accounts ?AccountNumber=
+   - POST: /RetailBanking/Debit
+   - POST: /RetailBanking/Credit
+   - POST: /RetailBanking/Cheques
+   - POST: /Retailbanking/Deposit
+   - POST: /Loan/Payments
+   - POST: /Wholesale/LetterOfCredit
+   - POST: /Customer/CashMonitoringReport - accessible only by tellers
+
+ - Data:
+  ```
+  {
+     "AccountType": "string",
+     "CustomerNumber": "string"
+  }
+  ```
+
+* **Customer API:**
+Provides models for users to create and query customers for all banking domains 
+
+ ** URLs:
+
+   - POST: /Personal/Customer
+   - POST: /Business/Customer
+   - GET: /Personal/Customer ?CustomerNumber=
+   - GET: /Business/Customer ?CustomerNumber=
+
+ - Data:
+  ```
+  {
+     "Address": "string",
+     "SSN": "string",
+     "Identification": "string"
+  }
+  ```
+
+
+### Microservices 
+
+* **Account Number Generator:**
+Creates new account numbers
+    - POST: /GenerateAccount
+    * interacts with core banking to generate account numbers
+
+* **Customer:**
+Creates new customers and queries customers
+    - POST: /Customer
+    - GET: /Customer ?CustomerNumber= &id= 
+    * interacts with core banking to generate customer numbers
+
+* **Retail Account:**
+Creates new checking or savings account and queries retail accounts
+    - POST: /Account
+    - GET: /Account ?CustomerNumber=
+    - GET: /Account ?AccountNumber=
+    * after creation of an account it creates a new account summary in core banking
+  
+* **CashMonitoringReport:**
+handles calls to a cash transactions monitoring system to avoid money laundering
+    - POST: /Customer/CashReporting
+    - GET: /Customer/CashReporting ?CustomerNumber=
+
+* **Loan Account:**
+Creates new loan accounts and queries loan accounts
+    - POST: /Account
+    - GET: /Account ?CustomerNumber=
+    - GET: /Account ?AccountNumber=
+    * after creation of an account it creates a new account summary in core banking
+
+* **Transactions:**
+submits transactions on accounts in core-banking 
+    - POST: /Transaction
+    - GET: /Transaction ?AccountNumber= 
+    * Implements the transactions on accounts.
+    A debit transaction in one account will result in a credit transaction in another account.
+
+* **AchTransactions:**
+submits ACH transactions for bank to bank transfer
+    - POST: /Transaction
+    - GET: /Transaction ?AccountNumber= 
+    * Implements ACH transactions, makes calls to ACH clearing house.
+
+* **SwiftTransactions:**
+submits swift transactions for international transfers
+    - POST: /Transaction
+    - GET: /Transaction ?AccountNumber= 
+    * Implements call to swift gateways.
+    
+* **CashTransactions:**
+handles teller transactions
+    - POST: /Transaction
+    - GET: /Transaction ?AccountNumber= 
+    * after posting the transaction, notifies any Cash Reporting/Money Laundering/Cash monitoring system.
+    
+* **Account Summary:**
+Updates summary data in core-banking, updated with monthly details for average balance, etc
+    - POST: /Account
+    - GET: /Account ?AccountNumber=
 
 ### Caching
 
