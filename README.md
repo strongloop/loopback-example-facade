@@ -34,13 +34,24 @@ There are three key principals to this design:
 
 Each arrow represents the direction of coupling. Eg. the facade must know about the Account service API, but not the other way around. Microservices should not depend on the facade/API layer, more on why below.
 
-**2) Purposeful Interfaces**
+**2) Simple and Purposeful Interfaces**
 
-The facade should act as the mediator, simple orchestrator and aggregator. It should do so in a way that treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs that are purpose designed, allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences. The facade pattern used in this example allows for each service to be simple and focused. In this case on interacting with data in a reliable and scalable way. This doesn't mean the facade should be complex because it doesn't include any business logic. It only provides specific interfaces.
+The facade should act as the mediator, simple orchestrator and aggregator. It should do so in a way that treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs that are purpose designed, allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences. This doesn't mean the facade should be complex because it doesn't include any business logic; it only provides specific interfaces. The facade pattern used in this example allows for each service to be simple and focused, interacting in a reliable and scalable way.
 
-**3) Simple and Isolated Microservices**
+**3) Isolated Microservices**
 
-Microservices represent the integration layer for the disparate backend systems. These systems often hold correlated data which may lead to data integrity issues and inconsistencies in business processes. Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
+Microservices represent the integration layer for the disparate backend systems. These systems often hold correlated data in separate data stores, which may lead to data integrity issues and inconsistencies in business processes. 
+   * Some of the systems accept only flat files as input, file adapters will be needed to connect with them.
+   * domain specific systems often have a message broker as a means of accepting communication
+   * monolithic single install systems may have online transaction wrappers installed with them
+   * background operations may be performed, message queues would be needed to send request and wait for a response.
+   * same entity like customer may exist in multiple DBs, requiring data graphs.
+   * parallel transactions/services may need to be initiated, which require a state machine to commit all or rollback all
+   * different systems may need different transport protocols, like http vs soap vs mainframe
+   * different systems may need different data formats, like cobol copy books, feed files, xml, command interfaces
+   * some systems are slow processors and would need a url/endpoint to callback on completion
+
+Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
 
 ## High Level Design
 
@@ -48,26 +59,45 @@ Microservices represent the integration layer for the disparate backend systems.
 
 * **Accounts API:**
 Provides models for users to create and query all types of bank accounts
+
  * before creating an account it calls the account number generator
  * Any cash deposit will be preceded by checking a CashMonitoringReport microservice
-
  * URLs:
- 
-   - POST: /RetailBanking/Accounts`  ` `AccountType = "Savings", "Checking"`
+
+   - POST: /RetailBanking/Accounts
+     - `AccountType = "Savings", "Checking"`
+
    - GET:  /RetailBanking/Accounts ?AccountNumber=
-   - POST: /Wholesale/Accounts`      ` `AccountType = "Pension", "International"`
+
+   - POST: /Wholesale/Accounts
+     - `AccountType = "Pension", "International"`
+ 
    - GET:  /Wholesale/Accounts ?AccountNumber=
-   - POST: /Commercial/Accounts`     ` `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
+ 
+   - POST: /Commercial/Accounts
+     - `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
+
    - GET:  /Commercial/Accounts ?AccountNumber=
-   - POST: /Loan/Accounts`           ` `AccountType = "Mortgage", "Personal"`
+
+   - POST: /Loan/Accounts
+     - `AccountType = "Mortgage", "Personal"`
+
    - GET:  /Loan/Accounts ?AccountNumber=
+
    - POST: /RetailBanking/Debit
+
    - POST: /RetailBanking/Credit
+ 
    - POST: /RetailBanking/Cheques
+ 
    - POST: /Retailbanking/Deposit
+
    - POST: /Loan/Payments
+
    - POST: /Wholesale/LetterOfCredit
+
    - POST: /Customer/CashMonitoringReport - accessible only by tellers
+
 
  - Data:
   ```
@@ -78,14 +108,17 @@ Provides models for users to create and query all types of bank accounts
   ```
 
 * **Customer API:**
-Provides models for users to create and query customers for all banking domains 
-
- ** URLs:
+ * Provides models for users to create and query customers for all banking domains 
+ * URLs:
 
    - POST: /Personal/Customer
+
    - POST: /Business/Customer
+
    - GET: /Personal/Customer ?CustomerNumber=
+
    - GET: /Business/Customer ?CustomerNumber=
+
 
  - Data:
   ```
