@@ -1,5 +1,6 @@
 # loopback-example-facade
 
+## Quick-Install
 ```
 $ git clone https://github.com/strongloop/loopback-example-facade
 $ cd loopback-example-facade
@@ -23,7 +24,7 @@ In the diagram below, you can see the basic application architecture of the **Na
  - **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications
  - **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices
  - **Microservices** - In principal, are micro applications, and provide a simple component oriented application development. In our architecture we have considered microservices (/microapplications) as the individual units of business logic and provide simple service interfaces for banking transactions. They encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery softwares in general referred to as `System of Records`. 
- - **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA) to integrate systems. The extent of traditional SOA infrastructure required is based on the complexity of the legacy systems. 
+ - **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA). The extent of traditional SOA infrastructure required is based on the complexity of the legacy systems. SOA infact expanded out of the integration problem in legacy systems.
    * Some of the systems accept only flat files as input, file adapters will be needed to connect with them.
    * domain specific systems often have a message broker as a means of accepting communication
    * monolithic single install systems may have online transaction wrappers installed with them
@@ -33,10 +34,10 @@ In the diagram below, you can see the basic application architecture of the **Na
    * different systems may need different transport protocols, like http vs soap vs mainframe
    * different systems may need different data formats, like cobol copy books, feed files, xml, command interfaces
    * some systems are slow processors and would need a url/endpoint to callback on completion
+   
+   - Most often SOA applications could be refactored into micro-services. Microservices, could be considered as an improvement of SOA in aspects of service encapsulation, though the driving idea behind microservices is different. With microservices business processes interact with each other at a granular level. There are many online articles discussing on how SOA can exist with microservices
+ - [Microservices and SOA, Friends or Enemies](https://www.ibm.com/developerworks/websphere/library/techarticles/1601_clark-trs/1601_clark.html)
 
- ** Most often SOA could be further simplified into micro-services. Microservices, could be considered as an improvement of SOA in aspects of service encapsulation, though the driving idea behind microservices is different. There are many online articles discussing on how to SOA and microservices can work together**
- `https://www.ibm.com/developerworks/websphere/library/techarticles/1601_clark-trs/1601_clark.html`
- 
  - **Systems of Record** - Databases, mainframes, and other information systems 
 
 ![Application Architecture](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-arch.png)
@@ -93,7 +94,7 @@ Provides models for users to create and query all types of bank accounts
     * POST: /Loan/Payments
     * POST: /Wholesale/LetterOfCredit
     * POST: /Customer/CashMonitoringReport 
-      * accessible only by tellers
+      * accessible only to tellers
 
  * Data:
   ```
