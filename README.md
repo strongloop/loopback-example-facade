@@ -10,11 +10,11 @@ $ curl -X GET --header 'Accept: application/json' 'http://localhost:3000/api/Acc
 
 
 ## About
-
 In this example, we create "Nano Bank" (a basic banking
 application) to demonstrate best practices for writing scalable Microservices using LoopBack.
 
-### Microservice Architecture
+
+## Microservice Architecture
 
 > "a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API"
 > - [Martin Fowler (on Microservices)](https://martinfowler.com/articles/microservices.html)
@@ -45,7 +45,9 @@ The facade should provide easy application interfaces for the users and act as a
 Microservices represent the services layer and implements the business logic. They integrate disparate backend systems which often hold correlated data in separate data stores, that may lead to data integrity issues and inconsistencies in business processes. 
 Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
 
-***Guidelines***
+**Guidelines**
+
+SOA has been the prominent framework to provide business services until microservices arrived. Transition from a complete SOA implementation to Microservices will need a lot of thought about redesign and will have certain pain points. Architects and solution designers must start by separating business logic from integration solutions in existing SOA applications. Microservices can then be designed by focusing on designing business logic. With microservices business logic could be developed with much agility. In Microservices Architecture, API's can create standard business interfaces by interacting with microservices. API's can interact at a granular level, letting user applications provide agile business processes.
 
 SOA services and integration processes might still be required to solve the integration problem in legacy systems.
    * Some of the systems accept only flat files as input, file adapters will be needed to connect with them.
@@ -58,7 +60,7 @@ SOA services and integration processes might still be required to solve the inte
    * different systems may need different data formats, like cobol copy books, feed files, xml, command interfaces
    * some systems are slow processors and would need a url/endpoint to callback on completion
 
-If the business logic could be separated from the integration problems, Microservices could be considered as an improvement of SOA in aspects of business services, though the driving idea behind microservices is different. With microservices business logic could be developed with much agility. In microservices architecture business processes driven by API's can interact at a granular level.
+If the business logic could be separated from the integration problems, Microservices could be considered as an improvement of SOA in aspects of business services, though the driving idea behind microservices is different. 
 [There are some articles discussing on how SOA can exist with microservices] (https://www.ibm.com/developerworks/websphere/library/techarticles/1601_clark-trs/1601_clark.html)
 Most often business logic in SOA applications could be refactored into micro-services. 
 
