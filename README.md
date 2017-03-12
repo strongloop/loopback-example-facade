@@ -1,5 +1,6 @@
 # loopback-example-facade
 
+## Quick-Install
 ```
 $ git clone https://github.com/strongloop/loopback-example-facade
 $ cd loopback-example-facade
@@ -20,10 +21,21 @@ application) to demonstrate best practices for writing scalable Microservices us
 
 In the diagram below, you can see the basic application architecture of the **Nano Bank** application.
 
- - **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications
- - **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices
- - **Microservices** - The individual units of business logic that encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery applications in general referred to as `System of Records`
- - **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA) to integrate systems
+ * **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications
+ * **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices
+ * **Microservices** - In principal, are micro applications, and provide a simple component oriented application development. In our architecture we have considered microservices (/microapplications) as the individual units of business logic and provide simple service interfaces for banking transactions. They encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery softwares in general referred to as `System of Records`. 
+ * **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA). The extent of traditional SOA infrastructure required is based on the complexity of the legacy systems. SOA infact expanded out of the integration problem in legacy systems.
+   * Some of the systems accept only flat files as input, file adapters will be needed to connect with them.
+   * domain specific systems often have a message broker as a means of accepting communication
+   * monolithic single install systems may have online transaction wrappers installed with them
+   * background operations may be performed, message queues would be needed to send request and wait for a response.
+   * same entity like customer may exist in multiple DBs, requiring data graphs.
+   * parallel transactions/services may need to be initiated, which require a state machine to commit all or rollback all
+   * different systems may need different transport protocols, like http vs soap vs mainframe
+   * different systems may need different data formats, like cobol copy books, feed files, xml, command interfaces
+   * some systems are slow processors and would need a url/endpoint to callback on completion
+> Most often SOA applications could be refactored into micro-services. Microservices, could be considered as an improvement of SOA in aspects of service encapsulation, though the driving idea behind microservices is different. With microservices business processes interact with each other at a granular level. There are many articles discussing on how SOA can exist with microservices. [Microservices and SOA, Friends or Enemies] (https://www.ibm.com/developerworks/websphere/library/techarticles/1601_clark-trs/1601_clark.html)
+
  - **Systems of Record** - Databases, mainframes, and other information systems 
 
 ![Application Architecture](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-arch.png)
@@ -36,24 +48,22 @@ Each arrow represents the direction of coupling. Eg. the facade must know about 
 
 **2) Simple and Purposeful Interfaces**
 
-The facade should act as the mediator, simple orchestrator and aggregator. It should do so in a way that treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs that are purpose designed, allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences. This doesn't mean the facade should be complex because it doesn't include any business logic; it only provides specific interfaces. The facade pattern used in this example allows for each service to be simple and focused, interacting in a reliable and scalable way.
+The facade should provide easy application interfaces for the users and act as a mediator, simple orchestrator and data aggregator. It should do so in a way that treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs that are purpose designed, allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences. This doesn't mean the facade should be complex because it doesn't include any business logic; it only provides specific interfaces. The facade pattern used in this example allows for each service to be simple and focused, interacting in a reliable and scalable way.
 
 **3) Isolated Microservices**
 
-Microservices represent the integration layer for the disparate backend systems. These systems often hold correlated data in separate data stores, which may lead to data integrity issues and inconsistencies in business processes. 
-   * Some of the systems accept only flat files as input, file adapters will be needed to connect with them.
-   * domain specific systems often have a message broker as a means of accepting communication
-   * monolithic single install systems may have online transaction wrappers installed with them
-   * background operations may be performed, message queues would be needed to send request and wait for a response.
-   * same entity like customer may exist in multiple DBs, requiring data graphs.
-   * parallel transactions/services may need to be initiated, which require a state machine to commit all or rollback all
-   * different systems may need different transport protocols, like http vs soap vs mainframe
-   * different systems may need different data formats, like cobol copy books, feed files, xml, command interfaces
-   * some systems are slow processors and would need a url/endpoint to callback on completion
-
+Microservices represent the services layer and implements the business logic. They integrate disparate backend systems which often hold correlated data in separate data stores, that may lead to data integrity issues and inconsistencies in business processes. 
 Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
 
 ## High Level Design
+  * External APIs are modeled and data elements are named by the enterprise data-modeling team
+  * Security profiles are created as per the policies of the enterprise architecture team.
+  * Design of the facade layer is often reviewed directly by the enterprise architecture team.
+  * The Microservices layer is designed by the already established guidelines of the internal architecture.
+  * Security configurations which are already in use can most often directly be used.
+  * Review of microservices design is done by domain specific technical architects and solution architects.
+  * Microservices focus on business innovation
+  * Facade/External APIs focus on user innovation
 
 ### Facade 
 
@@ -62,44 +72,29 @@ Provides models for users to create and query all types of bank accounts
 
  * before creating an account it calls the account number generator
  * Any cash deposit will be preceded by checking a CashMonitoringReport microservice
- * URLs:
+ * URLs
+   * POST: /RetailBanking/Accounts
+     * `AccountType = "Savings", "Checking"`
+    * GET:  /RetailBanking/Accounts ?AccountNumber=
+    * POST: /Wholesale/Accounts
+      * `AccountType = "Pension", "International"`
+    * GET:  /Wholesale/Accounts ?AccountNumber=
+    * POST: /Commercial/Accounts
+      * `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
+    * GET:  /Commercial/Accounts ?AccountNumber=
+    * POST: /Loan/Accounts
+      * `AccountType = "Mortgage", "Personal"`
+    * GET:  /Loan/Accounts ?AccountNumber=
+    * POST: /RetailBanking/Debit
+    * POST: /RetailBanking/Credit
+    * POST: /RetailBanking/Cheques
+    * POST: /Retailbanking/Deposit
+    * POST: /Loan/Payments
+    * POST: /Wholesale/LetterOfCredit
+    * POST: /Customer/CashMonitoringReport 
+      * accessible only to tellers
 
-   - POST: /RetailBanking/Accounts
-     - `AccountType = "Savings", "Checking"`
-
-   - GET:  /RetailBanking/Accounts ?AccountNumber=
-
-   - POST: /Wholesale/Accounts
-     - `AccountType = "Pension", "International"`
- 
-   - GET:  /Wholesale/Accounts ?AccountNumber=
- 
-   - POST: /Commercial/Accounts
-     - `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
-
-   - GET:  /Commercial/Accounts ?AccountNumber=
-
-   - POST: /Loan/Accounts
-     - `AccountType = "Mortgage", "Personal"`
-
-   - GET:  /Loan/Accounts ?AccountNumber=
-
-   - POST: /RetailBanking/Debit
-
-   - POST: /RetailBanking/Credit
- 
-   - POST: /RetailBanking/Cheques
- 
-   - POST: /Retailbanking/Deposit
-
-   - POST: /Loan/Payments
-
-   - POST: /Wholesale/LetterOfCredit
-
-   - POST: /Customer/CashMonitoringReport - accessible only by tellers
-
-
- - Data:
+ * Data:
   ```
   {
      "AccountType": "string",
@@ -109,18 +104,13 @@ Provides models for users to create and query all types of bank accounts
 
 * **Customer API:**
  * Provides models for users to create and query customers for all banking domains 
- * URLs:
+ * URLs
+   * POST: /Personal/Customer
+   * POST: /Business/Customer
+   * GET: /Personal/Customer ?CustomerNumber=
+   * GET: /Business/Customer ?CustomerNumber=
 
-   - POST: /Personal/Customer
-
-   - POST: /Business/Customer
-
-   - GET: /Personal/Customer ?CustomerNumber=
-
-   - GET: /Business/Customer ?CustomerNumber=
-
-
- - Data:
+ * Data:
   ```
   {
      "Address": "string",
@@ -133,64 +123,64 @@ Provides models for users to create and query all types of bank accounts
 ### Microservices 
 
 * **Account Number Generator:**
-Creates new account numbers
-    - POST: /GenerateAccount
-    * interacts with core banking to generate account numbers
+  * Creates new account numbers
+  * interacts with core banking to generate account numbers
+     * POST: /GenerateAccount
 
 * **Customer:**
-Creates new customers and queries customers
-    - POST: /Customer
-    - GET: /Customer ?CustomerNumber= &id= 
-    * interacts with core banking to generate customer numbers
-
-* **Retail Account:**
-Creates new checking or savings account and queries retail accounts
-    - POST: /Account
-    - GET: /Account ?CustomerNumber=
-    - GET: /Account ?AccountNumber=
-    * after creation of an account it creates a new account summary in core banking
+  * Creates new customers and queries customers
+  * interacts with core banking to generate customer numbers
+    * POST: /Customer
+    * GET: /Customer ?CustomerNumber= &id= 
   
+* **Retail Account:**
+   * Creates new checking or savings account and queries retail accounts
+   * after creation of an account it creates a new account summary in core banking
+      * POST: /Account
+      * GET: /Account ?CustomerNumber=
+      * GET: /Account ?AccountNumber=
 * **CashMonitoringReport:**
-handles calls to a cash transactions monitoring system to avoid money laundering
-    - POST: /Customer/CashReporting
-    - GET: /Customer/CashReporting ?CustomerNumber=
+   * handles calls to a cash transactions monitoring system to avoid money laundering
+     * POST: /Customer/CashReporting
+     * GET: /Customer/CashReporting ?CustomerNumber=
 
 * **Loan Account:**
-Creates new loan accounts and queries loan accounts
-    - POST: /Account
-    - GET: /Account ?CustomerNumber=
-    - GET: /Account ?AccountNumber=
-    * after creation of an account it creates a new account summary in core banking
+  * Creates new loan accounts and queries loan accounts
+  * after creation of an account it creates a new account summary in core banking
+    * POST: /Account
+    * GET: /Account ?CustomerNumber=
+    * GET: /Account ?AccountNumber=
 
 * **Transactions:**
-submits transactions on accounts in core-banking 
-    - POST: /Transaction
-    - GET: /Transaction ?AccountNumber= 
+  * submits transactions on accounts in core-banking 
+  * A debit transaction in one account will result in a credit transaction in another account.
+    * POST: /Transaction
+    * GET: /Transaction ?AccountNumber= 
     * Implements the transactions on accounts.
-    A debit transaction in one account will result in a credit transaction in another account.
 
 * **AchTransactions:**
-submits ACH transactions for bank to bank transfer
-    - POST: /Transaction
-    - GET: /Transaction ?AccountNumber= 
-    * Implements ACH transactions, makes calls to ACH clearing house.
-
+  * submits ACH transactions for bank to bank transfer
+  * Implements ACH transactions, makes calls to ACH clearing house.
+    * POST: /Transaction
+    * GET: /Transaction ?AccountNumber= 
+    
 * **SwiftTransactions:**
-submits swift transactions for international transfers
-    - POST: /Transaction
-    - GET: /Transaction ?AccountNumber= 
-    * Implements call to swift gateways.
+  * submits swift transactions for international transfers
+  * Implements call to swift gateways.
+    * POST: /Transaction
+    * GET: /Transaction ?AccountNumber= 
     
 * **CashTransactions:**
-handles teller transactions
-    - POST: /Transaction
-    - GET: /Transaction ?AccountNumber= 
-    * after posting the transaction, notifies any Cash Reporting/Money Laundering/Cash monitoring system.
+  * handles teller transactions
+  * after posting the transaction, notifies any Cash Reporting/Money Laundering/Cash monitoring system.
+    * POST: /Transaction
+    * GET: /Transaction ?AccountNumber= 
     
 * **Account Summary:**
-Updates summary data in core-banking, updated with monthly details for average balance, etc
-    - POST: /Account
-    - GET: /Account ?AccountNumber=
+   * Updates summary data in core-banking, updated with monthly details for average balance, etc
+     * POST: /Account
+     * GET: /Account ?AccountNumber=
+
 
 ### Caching
 
