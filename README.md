@@ -25,22 +25,12 @@ In the diagram below, you can see the basic application architecture of the **Na
  * **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices
  * **Microservices** - In principal, are micro applications, and provide a simple component oriented application development. In our architecture we have considered microservices (/microapplications) as the individual units of business logic and provide simple service interfaces for banking transactions. They encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery softwares in general referred to as `System of Records`. 
  * **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA). The extent of traditional SOA infrastructure required is based on the complexity of the legacy systems. SOA infact expanded out of the integration problem in legacy systems.
-   * Some of the systems accept only flat files as input, file adapters will be needed to connect with them.
-   * domain specific systems often have a message broker as a means of accepting communication
-   * monolithic single install systems may have online transaction wrappers installed with them
-   * background operations may be performed, message queues would be needed to send request and wait for a response.
-   * same entity like customer may exist in multiple DBs, requiring data graphs.
-   * parallel transactions/services may need to be initiated, which require a state machine to commit all or rollback all
-   * different systems may need different transport protocols, like http vs soap vs mainframe
-   * different systems may need different data formats, like cobol copy books, feed files, xml, command interfaces
-   * some systems are slow processors and would need a url/endpoint to callback on completion
-> Most often SOA applications could be refactored into micro-services. Microservices, could be considered as an improvement of SOA in aspects of service encapsulation, though the driving idea behind microservices is different. With microservices business processes interact with each other at a granular level. There are many articles discussing on how SOA can exist with microservices. [Microservices and SOA, Friends or Enemies] (https://www.ibm.com/developerworks/websphere/library/techarticles/1601_clark-trs/1601_clark.html)
-
- - **Systems of Record** - Databases, mainframes, and other information systems 
+ * **Systems of Record** - Databases, mainframes, and other information systems 
 
 ![Application Architecture](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-arch.png)
 
-There are three key principals to this design:
+
+***There are three key principals to this architecture:***
 
 **1) One way dependencies**
 
@@ -54,6 +44,23 @@ The facade should provide easy application interfaces for the users and act as a
 
 Microservices represent the services layer and implements the business logic. They integrate disparate backend systems which often hold correlated data in separate data stores, that may lead to data integrity issues and inconsistencies in business processes. 
 Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
+
+***Guidelines***
+
+SOA services and integration processes might still be required to solve the integration problem in legacy systems.
+   * Some of the systems accept only flat files as input, file adapters will be needed to connect with them.
+   * domain specific systems often have a message broker as a means of accepting communication
+   * monolithic single install systems may have online transaction wrappers installed with them
+   * background operations may be performed, message queues would be needed to send request and wait for a response.
+   * same entity like customer may exist in multiple DBs, requiring data graphs.
+   * parallel transactions/services may need to be initiated, which require a state machine to commit all or rollback all
+   * different systems may need different transport protocols, like http vs soap vs mainframe
+   * different systems may need different data formats, like cobol copy books, feed files, xml, command interfaces
+   * some systems are slow processors and would need a url/endpoint to callback on completion
+
+If the business logic could be separated from the integration problems, Microservices could be considered as an improvement of SOA in aspects of business services, though the driving idea behind microservices is different. With microservices business logic could be developed with much agility. In microservices architecture business processes driven by API's can interact at a granular level.
+[There are some articles discussing on how SOA can exist with microservices] (https://www.ibm.com/developerworks/websphere/library/techarticles/1601_clark-trs/1601_clark.html)
+Most often business logic in SOA applications could be refactored into micro-services. 
 
 ## High Level Design
   * External APIs are modeled and data elements are named by the enterprise data-modeling team
