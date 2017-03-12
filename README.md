@@ -21,10 +21,10 @@ application) to demonstrate best practices for writing scalable Microservices us
 In the diagram below, you can see the basic application architecture of the **Nano Bank** application.
 
  - **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications
- - **Facade** - The public facing interface for the application (aka API) that orchestrates the discrete Microservices
- - **Microservices** - The individual units of business logic and encapsulate complex legacy Services of Record and other internal core banking services
- - **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that implement service oriented (SoA) behavior
- - **Systems of Record** - Databases, mainframes, and other information systems abstracted by simple micro services 
+ - **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices
+ - **Microservices** - The individual units of business logic that encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery applications in general referred to as `System of Records`
+ - **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA) to integrate systems
+ - **Systems of Record** - Databases, mainframes, and other information systems 
 
 ![Application Architecture](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-arch.png)
 
@@ -32,15 +32,15 @@ There are three key principals to this design:
 
 **1) One way dependencies**
 
-Each arrow represents the direction of coupling. Eg. the facade must know about the Account service API, but not the other way around. Microservices should depend on the facade, more on why below.
+Each arrow represents the direction of coupling. Eg. the facade must know about the Account service API, but not the other way around. Microservices should not depend on the facade/API layer, more on why below.
 
 **2) Purposeful Interfaces**
 
-The facade should act as the mediator, orchestrator and aggregator. It should do so in a way that treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs that are purpose designed, allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences.
+The facade should act as the mediator, simple orchestrator and aggregator. It should do so in a way that treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs that are purpose designed, allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences. The facade pattern used in this example allows for each service to be simple and focused. In this case on interacting with data in a reliable and scalable way. This doesn't mean the facade should be complex because it doesn't include any business logic. It only provides specific interfaces.
 
 **3) Simple and Isolated Microservices**
 
-The facade pattern used in this example allows for each service to be simple and focused. In this case on interacting with data in a reliable and scalable way. This doesn't mean the facade itself should be complex. It shouldn't include any business logic, only enough logic to provide purpose specific interfaces.
+Microservices represent the integration layer for the disparate backend systems. These systems often hold correlated data which may lead to data integrity issues and inconsistencies in business processes. Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
 
 ### Caching
 
