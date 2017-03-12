@@ -44,20 +44,25 @@ Microservices represent the integration layer for the disparate backend systems.
 
 ### High Level Design
 
-#### Facade 
+** Facade **
 
-**Accounts API:**
+####Accounts API:
 Provides models for users to create and query all types of bank accounts
-  >> POST: /RetailBanking/Accounts `AccountType = "Savings", "Checking"`
-     POST: /Wholesale/Accounts  `AccountType = "Pension", "International"`
-     POST: /Commercial/Accounts `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
-     POST: /Loan/Accounts `AccountType = "Mortgage", "Personal"`
-     ```
-     {
-       "AccountType": "string",
-       "CustomerNumber": "string"
-     }
-     ```
+
+- URLs:
+  - POST: /RetailBanking/Accounts  * `AccountType = "Savings", "Checking"`
+  - POST: /Wholesale/Accounts      * `AccountType = "Pension", "International"`
+  - POST: /Commercial/Accounts     * `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
+  - POST: /Loan/Accounts           * `AccountType = "Mortgage", "Personal"`
+
+- Data:
+ ```
+ {
+    "AccountType": "string",
+    "CustomerNumber": "string"
+ }
+ ```
+
 
 ### Caching
 
