@@ -22,8 +22,21 @@ In the diagram below, you can see the basic application architecture of the **Na
 
  - **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications
  - **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices
- - **Microservices** - The individual units of business logic that encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery applications in general referred to as `System of Records`
- - **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA) to integrate systems
+ - **Microservices** - In principal, are micro applications, and provide a simple component oriented application development. In our architecture we have considered microservices (/microapplications) as the individual units of business logic and provide simple service interfaces for banking transactions. They encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery softwares in general referred to as `System of Records`. 
+ - **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA) to integrate systems. The extent of traditional SOA infrastructure required is based on the complexity of the legacy systems. 
+   * Some of the systems accept only flat files as input, file adapters will be needed to connect with them.
+   * domain specific systems often have a message broker as a means of accepting communication
+   * monolithic single install systems may have online transaction wrappers installed with them
+   * background operations may be performed, message queues would be needed to send request and wait for a response.
+   * same entity like customer may exist in multiple DBs, requiring data graphs.
+   * parallel transactions/services may need to be initiated, which require a state machine to commit all or rollback all
+   * different systems may need different transport protocols, like http vs soap vs mainframe
+   * different systems may need different data formats, like cobol copy books, feed files, xml, command interfaces
+   * some systems are slow processors and would need a url/endpoint to callback on completion
+
+ ** Most often SOA could be further simplified into micro-services. Microservices, could be considered as an improvement of SOA in aspects of service encapsulation, though the driving idea behind microservices is different. There are many online articles discussing on how to SOA and microservices can work together**
+ `https://www.ibm.com/developerworks/websphere/library/techarticles/1601_clark-trs/1601_clark.html`
+ 
  - **Systems of Record** - Databases, mainframes, and other information systems 
 
 ![Application Architecture](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-arch.png)
@@ -41,16 +54,6 @@ The facade should act as the mediator, simple orchestrator and aggregator. It sh
 **3) Isolated Microservices**
 
 Microservices represent the integration layer for the disparate backend systems. These systems often hold correlated data in separate data stores, which may lead to data integrity issues and inconsistencies in business processes. 
-   * Some of the systems accept only flat files as input, file adapters will be needed to connect with them.
-   * domain specific systems often have a message broker as a means of accepting communication
-   * monolithic single install systems may have online transaction wrappers installed with them
-   * background operations may be performed, message queues would be needed to send request and wait for a response.
-   * same entity like customer may exist in multiple DBs, requiring data graphs.
-   * parallel transactions/services may need to be initiated, which require a state machine to commit all or rollback all
-   * different systems may need different transport protocols, like http vs soap vs mainframe
-   * different systems may need different data formats, like cobol copy books, feed files, xml, command interfaces
-   * some systems are slow processors and would need a url/endpoint to callback on completion
-
 Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
 
 ## High Level Design
@@ -70,30 +73,29 @@ Provides models for users to create and query all types of bank accounts
 
  * before creating an account it calls the account number generator
  * Any cash deposit will be preceded by checking a CashMonitoringReport microservice
- * URLs:
+ * URLs
    * POST: /RetailBanking/Accounts
      * `AccountType = "Savings", "Checking"`
-   * GET:  /RetailBanking/Accounts ?AccountNumber=
-   * POST: /Wholesale/Accounts
-     * `AccountType = "Pension", "International"`
-   * GET:  /Wholesale/Accounts ?AccountNumber=
-   * POST: /Commercial/Accounts
-     * `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
-   * GET:  /Commercial/Accounts ?AccountNumber=
-   * POST: /Loan/Accounts
-     * `AccountType = "Mortgage", "Personal"`
-   * GET:  /Loan/Accounts ?AccountNumber=
-   * POST: /RetailBanking/Debit
-   * POST: /RetailBanking/Credit
-   * POST: /RetailBanking/Cheques
-   * POST: /Retailbanking/Deposit
-   * POST: /Loan/Payments
-   * POST: /Wholesale/LetterOfCredit
-   * POST: /Customer/CashMonitoringReport 
-     * accessible only by tellers
+    * GET:  /RetailBanking/Accounts ?AccountNumber=
+    * POST: /Wholesale/Accounts
+      * `AccountType = "Pension", "International"`
+    * GET:  /Wholesale/Accounts ?AccountNumber=
+    * POST: /Commercial/Accounts
+      * `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
+    * GET:  /Commercial/Accounts ?AccountNumber=
+    * POST: /Loan/Accounts
+      * `AccountType = "Mortgage", "Personal"`
+    * GET:  /Loan/Accounts ?AccountNumber=
+    * POST: /RetailBanking/Debit
+    * POST: /RetailBanking/Credit
+    * POST: /RetailBanking/Cheques
+    * POST: /Retailbanking/Deposit
+    * POST: /Loan/Payments
+    * POST: /Wholesale/LetterOfCredit
+    * POST: /Customer/CashMonitoringReport 
+      * accessible only by tellers
 
-
- - Data:
+ * Data:
   ```
   {
      "AccountType": "string",
@@ -103,18 +105,13 @@ Provides models for users to create and query all types of bank accounts
 
 * **Customer API:**
  * Provides models for users to create and query customers for all banking domains 
- * URLs:
+ * URLs
+   * POST: /Personal/Customer
+   * POST: /Business/Customer
+   * GET: /Personal/Customer ?CustomerNumber=
+   * GET: /Business/Customer ?CustomerNumber=
 
-   - POST: /Personal/Customer
-
-   - POST: /Business/Customer
-
-   - GET: /Personal/Customer ?CustomerNumber=
-
-   - GET: /Business/Customer ?CustomerNumber=
-
-
- - Data:
+ * Data:
   ```
   {
      "Address": "string",
