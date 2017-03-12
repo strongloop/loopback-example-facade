@@ -21,10 +21,10 @@ application) to demonstrate best practices for writing scalable Microservices us
 
 In the diagram below, you can see the basic application architecture of the **Nano Bank** application.
 
- - **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications
- - **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices
- - **Microservices** - In principal, are micro applications, and provide a simple component oriented application development. In our architecture we have considered microservices (/microapplications) as the individual units of business logic and provide simple service interfaces for banking transactions. They encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery softwares in general referred to as `System of Records`. 
- - **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA). The extent of traditional SOA infrastructure required is based on the complexity of the legacy systems. SOA infact expanded out of the integration problem in legacy systems.
+ * **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications
+ * **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices
+ * **Microservices** - In principal, are micro applications, and provide a simple component oriented application development. In our architecture we have considered microservices (/microapplications) as the individual units of business logic and provide simple service interfaces for banking transactions. They encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery softwares in general referred to as `System of Records`. 
+ * **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA). The extent of traditional SOA infrastructure required is based on the complexity of the legacy systems. SOA infact expanded out of the integration problem in legacy systems.
    * Some of the systems accept only flat files as input, file adapters will be needed to connect with them.
    * domain specific systems often have a message broker as a means of accepting communication
    * monolithic single install systems may have online transaction wrappers installed with them
@@ -34,9 +34,7 @@ In the diagram below, you can see the basic application architecture of the **Na
    * different systems may need different transport protocols, like http vs soap vs mainframe
    * different systems may need different data formats, like cobol copy books, feed files, xml, command interfaces
    * some systems are slow processors and would need a url/endpoint to callback on completion
-   
-   - Most often SOA applications could be refactored into micro-services. Microservices, could be considered as an improvement of SOA in aspects of service encapsulation, though the driving idea behind microservices is different. With microservices business processes interact with each other at a granular level. There are many online articles discussing on how SOA can exist with microservices
- - [Microservices and SOA, Friends or Enemies](https://www.ibm.com/developerworks/websphere/library/techarticles/1601_clark-trs/1601_clark.html)
+> Most often SOA applications could be refactored into micro-services. Microservices, could be considered as an improvement of SOA in aspects of service encapsulation, though the driving idea behind microservices is different. With microservices business processes interact with each other at a granular level. There are many articles discussing on how SOA can exist with microservices. [Microservices and SOA, Friends or Enemies] (https://www.ibm.com/developerworks/websphere/library/techarticles/1601_clark-trs/1601_clark.html)
 
  - **Systems of Record** - Databases, mainframes, and other information systems 
 
@@ -50,11 +48,11 @@ Each arrow represents the direction of coupling. Eg. the facade must know about 
 
 **2) Simple and Purposeful Interfaces**
 
-The facade should act as the mediator, simple orchestrator and aggregator. It should do so in a way that treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs that are purpose designed, allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences. This doesn't mean the facade should be complex because it doesn't include any business logic; it only provides specific interfaces. The facade pattern used in this example allows for each service to be simple and focused, interacting in a reliable and scalable way.
+The facade should provide easy application interfaces for the users and act as a mediator, simple orchestrator and data aggregator. It should do so in a way that treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs that are purpose designed, allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences. This doesn't mean the facade should be complex because it doesn't include any business logic; it only provides specific interfaces. The facade pattern used in this example allows for each service to be simple and focused, interacting in a reliable and scalable way.
 
 **3) Isolated Microservices**
 
-Microservices represent the integration layer for the disparate backend systems. These systems often hold correlated data in separate data stores, which may lead to data integrity issues and inconsistencies in business processes. 
+Microservices represent the services layer and implements the business logic. They integrate disparate backend systems which often hold correlated data in separate data stores, that may lead to data integrity issues and inconsistencies in business processes. 
 Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
 
 ## High Level Design
