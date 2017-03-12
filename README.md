@@ -23,9 +23,9 @@ In the diagram below, you can see the basic application architecture of the **Na
 
  * **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications
  * **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices
- * **Microservices** - In principal, are micro applications, and provide a simple component oriented application development. In our architecture we have considered microservices (/microapplications) as the individual units of business logic and provide simple service interfaces for banking transactions. They encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery softwares in general referred to as `System of Records`. 
+ * **Microservices** - In principle, are micro applications, and provide a simple component oriented application development. In our architecture we have considered microservices (/microapplications) as the individual units of business logic and provide simple services for banking transactions and internal APIs. They encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery softwares in general referred to as `System of Records`. 
  * **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA). The extent of traditional SOA infrastructure required is based on the complexity of the legacy systems. SOA infact expanded out of the integration problem in legacy systems.
- * **Systems of Record** - Databases, mainframes, and other information systems 
+ * **System of Records** - Databases, mainframes, and other information systems 
 
 ![Application Architecture](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-arch.png)
 
@@ -38,11 +38,11 @@ Each arrow represents the direction of coupling. Eg. the facade must know about 
 
 **2) Simple and Purposeful Interfaces**
 
-The facade should provide easy application interfaces for the users and act as a mediator, simple orchestrator and data aggregator. It should do so in a way that treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs that are purpose designed, allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences. This doesn't mean the facade should be complex because it doesn't include any business logic; it only provides specific interfaces. The facade pattern used in this example allows for each service to be simple and focused, interacting in a reliable and scalable way.
+The facade should provide easy application interfaces for the users like, POST:/Retail/Account, (to create a checking account) and act as a mediator, simple orchestrator and data aggregator. It treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs like, POST:/Retail/PayPalPayment (to complete shopping online and make payment via paypal authentication) that are purpose designed allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences. This doesn't mean the facade should be complex because it doesn't include any business logic; it only provides specific interfaces. The facade pattern used in this example allows for each service to be simple and focused, interacting in a reliable and scalable way.
 
 **3) Isolated Microservices**
 
-Microservices represent the services layer and implements the business logic. They integrate disparate backend systems which often hold correlated data in separate data stores, that may lead to data integrity issues and inconsistencies in business processes. 
+Microservices implements business logic and provides service interfaces, like debit an account, create Ach Transaction, validate cheque fraudevents, etc. They integrate disparate backend systems which often hold correlated data in separate data stores, that may lead to data integrity issues and inconsistencies in business processes. 
 Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
 
 **Guidelines**
