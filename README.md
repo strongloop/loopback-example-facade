@@ -30,7 +30,7 @@ In the diagram below, you can see the basic application architecture of the **Na
 ![Application Architecture](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-arch.png)
 
 
-***There are three key principals to this architecture:***
+***Architectural Principles:***
 
 **1) One way dependencies**
 
@@ -42,15 +42,25 @@ The facade should provide easy application interfaces for the users like, POST:/
 
 **3) Isolated Microservices**
 
-Microservices implements business logic and provides service interfaces, like debit an account, create Ach Transaction, validate cheque fraudevents, etc. They integrate disparate backend systems which often hold correlated data in separate data stores, that may lead to data integrity issues and inconsistencies in business processes. 
-Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
+Microservices implements business logic and provides service interfaces, like debit an account, create Ach Transaction, validate cheque fraudevents, etc. Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
 
-**Guidelines**
+**Architectural Guidelines:**
 
-SOA has been the prominent framework to provide business services until microservices arrived. Transition from a complete SOA implementation to Microservices will need a lot of thought about redesign and will have certain pain points. Architects and solution designers must start by separating business logic from integration solutions in existing SOA applications. Microservices can then be designed by focusing on designing business logic. With microservices business logic could be developed with much agility. In Microservices Architecture, API's can create standard business interfaces by interacting with microservices. API's can interact at a granular level, letting user applications provide agile business processes.
+SOA has been the prominent framework to provide business services until microservices arrived. Transition from a complete SOA implementation to Microservices will need a lot of thought about redesign and will have certain pain points. 
 
-SOA services and integration processes might still be required to solve the integration problem in legacy systems.
-   * Some of the systems accept only flat files as input, file adapters will be needed to connect with them.
+* Design Transformation: 
+    Architects and solution designers must start by separating business logic from integration solutions in existing SOA applications. Microservices can then be designed by focusing on designing business logic. With microservices business logic could be developed with much agility. In Microservices Architecture, API's can create standard business models by interacting with microservices. API's can interact at a granular level, letting user applications provide agile business processes.
+
+* User Innovation:
+
+* Business Innovation:
+
+* Working alongside SOA stack:
+   SOA services and integration processes might still be required to solve the integration problem in legacy systems.
+   * They integrate disparate backend systems which often hold correlated data in separate data stores, that may lead to data integrity issues and inconsistencies in business processes.
+   * Soa process frameworks (eg:bpel) provides stateful systems to interact with distributed stateless services.
+   * many systems need protocol and data format transformation and SOA stack has many adapters available.
+   * some systems accept only flat files as input, file adapters will be needed to connect with them.
    * domain specific systems often have a message broker as a means of accepting communication
    * monolithic single install systems may have online transaction wrappers installed with them
    * background operations may be performed, message queues would be needed to send request and wait for a response.
