@@ -50,17 +50,19 @@ Microservices represent the integration layer for the disparate backend systems.
 Provides models for users to create and query all types of bank accounts
 
 - URLs:
-  - POST: /RetailBanking/Accounts   `AccountType = "Savings", "Checking"`
-  - POST: /Wholesale/Accounts       `AccountType = "Pension", "International"`
-  - POST: /Commercial/Accounts      `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
-  - POST: /Loan/Accounts            `AccountType = "Mortgage", "Personal"`
+  - POST: /RetailBanking/Accounts  * `AccountType = "Savings", "Checking"`
+  - POST: /Wholesale/Accounts      * `AccountType = "Pension", "International"`
+  - POST: /Commercial/Accounts     * `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
+  - POST: /Loan/Accounts           * `AccountType = "Mortgage", "Personal"`
 
 - Data:
- ```{
+ ```
+ {
     "AccountType": "string",
     "CustomerNumber": "string"
  }
  ```
+
 
 ### Caching
 
