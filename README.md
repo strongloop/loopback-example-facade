@@ -50,11 +50,15 @@ Microservices represent the integration layer for the disparate backend systems.
 Provides models for users to create and query all types of bank accounts
 
  - URLs:
-   - POST: /RetailBanking/Accounts  * `AccountType = "Savings", "Checking"`
-   - POST: /Wholesale/Accounts      * `AccountType = "Pension", "International"`
-   - POST: /Commercial/Accounts     * `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
-   - POST: /Loan/Accounts           * `AccountType = "Mortgage", "Personal"`
- 
+   - POST: /RetailBanking/Accounts`  ` `AccountType = "Savings", "Checking"`
+   - GET:  /RetailBanking/Accounts ?AccountNumber=
+   - POST: /Wholesale/Accounts`      ` `AccountType = "Pension", "International"`
+   - GET:  /Wholesale/Accounts ?AccountNumber=
+   - POST: /Commercial/Accounts`     ` `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
+   - GET:  /Commercial/Accounts ?AccountNumber=
+   - POST: /Loan/Accounts`           ` `AccountType = "Mortgage", "Personal"`
+   - GET:  /Loan/Accounts ?AccountNumber=
+
  - Data:
   ```
   {
@@ -63,6 +67,57 @@ Provides models for users to create and query all types of bank accounts
   }
   ```
 
+**Customer API:**
+Provides models for users to create and query customers for various banking domains 
+
+ - URLs:
+   - POST: /Personal/Customer
+   - POST: /Business/Customer
+   - GET: /Personal/Customer ?CustomerNumber=
+   - GET: /Business/Customer ?CustomerNumber=
+
+ - Data:
+  ```
+  {
+     "Address": "string",
+     "SSN": "string",
+     "Identification": "string"
+  }
+  ```
+
+
+#### Microservices 
+
+**Account Number Generator:**
+Creates new account numbers
+    - POST: /GenerateAccount
+
+**Customer:**
+Creates new customers and queries customers
+    - POST: /Customer
+    - GET: /Customer ?CustomerNumber= &id= 
+
+**Retail Account:**
+Creates new checking or savings account and queries retail accounts
+    - POST: /Account
+    - GET: /Account ?CustomerNumber=
+    - GET: /Account ?AccountNumber=
+
+**Loan Account:**
+Creates new loan accounts and queries loan accounts
+    - POST: /Account
+    - GET: /Account ?CustomerNumber=
+    - GET: /Account ?AccountNumber=
+
+**Transactions:**
+submits transactions on accounts in core-banking 
+    - POST: /Transaction
+    - GET: /Transaction ?AccountNumber=
+
+**Account Summary:**
+Updates summary in core-banking everytime transactions are initiated
+    - POST: /Account
+    - GET: /Account ?AccountNumber=
 
 ### Caching
 
