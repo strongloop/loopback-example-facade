@@ -42,6 +42,23 @@ The facade should act as the mediator, simple orchestrator and aggregator. It sh
 
 Microservices represent the integration layer for the disparate backend systems. These systems often hold correlated data which may lead to data integrity issues and inconsistencies in business processes. Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
 
+### High Level Design
+
+#### Facade 
+
+**Accounts API:**
+Provides models for users to create and query all types of bank accounts
+  >> POST: /RetailBanking/Accounts `AccountType = "Savings", "Checking"`
+     POST: /Wholesale/Accounts  `AccountType = "Pension", "International"`
+     POST: /Commercial/Accounts `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
+     POST: /Loan/Accounts `AccountType = "Mortgage", "Personal"`
+     ```
+     {
+       "AccountType": "string",
+       "CustomerNumber": "string"
+     }
+     ```
+
 ### Caching
 
 This example demonstrates two styles of Microservice caching. **Public** - sharing a cache between multiple services and **Private** - isolated caching, one cache per service.
