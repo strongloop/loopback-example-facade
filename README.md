@@ -42,11 +42,11 @@ The facade should act as the mediator, simple orchestrator and aggregator. It sh
 
 Microservices represent the integration layer for the disparate backend systems. These systems often hold correlated data which may lead to data integrity issues and inconsistencies in business processes. Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain.
 
-### High Level Design
+## High Level Design
 
-#### Facade 
+### Facade 
 
-**Accounts API:**
+* **Accounts API:**
 Provides models for users to create and query all types of bank accounts
 
  - URLs:
@@ -67,7 +67,7 @@ Provides models for users to create and query all types of bank accounts
   }
   ```
 
-**Customer API:**
+* **Customer API:**
 Provides models for users to create and query customers for various banking domains 
 
  - URLs:
@@ -86,36 +86,36 @@ Provides models for users to create and query customers for various banking doma
   ```
 
 
-#### Microservices 
+### Microservices 
 
-**Account Number Generator:**
+* **Account Number Generator:**
 Creates new account numbers
     - POST: /GenerateAccount
 
-**Customer:**
+* **Customer:**
 Creates new customers and queries customers
     - POST: /Customer
     - GET: /Customer ?CustomerNumber= &id= 
 
-**Retail Account:**
+* **Retail Account:**
 Creates new checking or savings account and queries retail accounts
     - POST: /Account
     - GET: /Account ?CustomerNumber=
     - GET: /Account ?AccountNumber=
 
-**Loan Account:**
+* **Loan Account:**
 Creates new loan accounts and queries loan accounts
     - POST: /Account
     - GET: /Account ?CustomerNumber=
     - GET: /Account ?AccountNumber=
 
-**Transactions:**
+* **Transactions:**
 submits transactions on accounts in core-banking 
     - POST: /Transaction
     - GET: /Transaction ?AccountNumber=
 
-**Account Summary:**
-Updates summary in core-banking everytime transactions are initiated
+* **Account Summary:**
+Updates summary data in core-banking, updated with monthly details for average balance, etc
     - POST: /Account
     - GET: /Account ?AccountNumber=
 
