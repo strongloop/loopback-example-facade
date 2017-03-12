@@ -50,6 +50,7 @@ Microservices represent the integration layer for the disparate backend systems.
 Provides models for users to create and query all types of bank accounts
 
  - URLs:
+ 
    - POST: /RetailBanking/Accounts`  ` `AccountType = "Savings", "Checking"`
    - GET:  /RetailBanking/Accounts ?AccountNumber=
    - POST: /Wholesale/Accounts`      ` `AccountType = "Pension", "International"`
@@ -112,8 +113,22 @@ Creates new loan accounts and queries loan accounts
 * **Transactions:**
 submits transactions on accounts in core-banking 
     - POST: /Transaction
-    - GET: /Transaction ?AccountNumber=
+    - GET: /Transaction ?AccountNumber= 
+    ** Implements the needs of transactions on accounts.
+    A debit transaction in one account will result in a credit transaction in another account.**
 
+* **AchTransactions:**
+submits ACH transactions for bank to bank transfer
+    - POST: /Transaction
+    - GET: /Transaction ?AccountNumber= 
+    ** Implements ACH transactions.
+
+* **SwiftTransactions:**
+submits swift transactions for international transfers
+    - POST: /Transaction
+    - GET: /Transaction ?AccountNumber= 
+    ** Implements call to swift gateways.
+    
 * **Account Summary:**
 Updates summary data in core-banking, updated with monthly details for average balance, etc
     - POST: /Account
