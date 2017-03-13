@@ -27,7 +27,7 @@ module.exports = function(Account) {
         console.log(">>>>>>>>>>> retrieved customer details");
       })
       .then(function() {
-        return services.findTransaction({id: accountNumber})
+        return services.findTransaction({accountNumber: accountNumber})
       })
       .then(function(data) {
         accountSummary.transactions = data.obj;
