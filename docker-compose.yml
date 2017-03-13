@@ -55,6 +55,20 @@ services:
       app-net:
         aliases:
           - vitals
+  mock-cache:
+    build: ./services/mock-cache
+    image: loopback-example-facade/mock-cache
+    ports:
+      - "3005:80"
+    links:
+      - customer
+      - account
+      - transaction
+      - facade
+    networks:
+      app-net:
+        aliases:
+          - mock-cache
 networks:
   app-net:
     driver: bridge
