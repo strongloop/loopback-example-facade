@@ -1,7 +1,7 @@
 'use strict';
 
 var Promise = require('bluebird');
-var services = require('../../lib/service');
+var services = require('../../lib/health-check');
 
 module.exports = function(Vitals) {
   Vitals.get = function() {
