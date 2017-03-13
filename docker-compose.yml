@@ -41,7 +41,20 @@ services:
         aliases:
           - facade
           - account-facade
-          
+  vitals:
+    build: ./services/health-check
+    image: loopback-example-facade/health-check
+    ports:
+      - "3004:80"
+    links:
+      - customer
+      - account
+      - transaction
+      - facade
+    networks:
+      app-net:
+        aliases:
+          - vitals
 networks:
   app-net:
     driver: bridge

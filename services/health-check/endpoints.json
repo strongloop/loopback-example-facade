@@ -1,0 +1,12 @@
+{
+  "endpoints": [
+    {"host": "customer",
+     "port": "80"},
+    {"host": "account",
+     "port": "80"},
+    {"host": "transaction",
+     "port": "80"},
+    {"host": "facade",
+     "port": "80"}
+  ]
+}
