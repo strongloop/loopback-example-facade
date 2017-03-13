@@ -5,7 +5,14 @@
 $ git clone https://github.com/strongloop/loopback-example-facade
 $ cd loopback-example-facade
 $ docker-compose up --build
-$ curl -X GET --header 'Accept: application/json' 'http://localhost:3000/api/Accounts/summary?accountNumber=CHK52321122'
+```
+Test
+```
+http://localhost:3000/api/Accounts/summary?accountNumber=CHK52321122
+```
+Health Check
+```
+http://localhost:3004/api/Vitals
 ```
 
 ## About
