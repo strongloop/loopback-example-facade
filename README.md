@@ -156,6 +156,30 @@ The private cache example, demonstrates a simple caching layer for an individual
 
 ### Health
 
+Modern container runtimes such as Docker, provide the ability to periodically run a health check on your running container. Even though your container is running, it still might not be responding, or otherwise in an undesirable state.
+
+Health checks allow you to peek inside a container to ensure they should still be running. Each of your microservices should provide a useful response to this health check beyond a `health | unhealthy`. In this example we provide the following response for every service.
+
+```
+# set the health check in docker
+HEALTHCHECK --interval=1m --timeout=10s \
+  CMD curl -f http://localhost/api/vitals || exit 1
+
+# example response (available per services via `docker inspect`)
+{
+  "status": "green", # color to display in a monitoring dasbhoard
+  "dependencies": {
+    "myDataSource": {
+      "status": "yellow", # determined by time to "ping"
+    },
+    "otherServiceWithHealthEndpoint": {
+      "status": "green", # from `/api/vitals` `status`
+      "dependencies": {...} # same as other `dependencies` object
+    }
+  }
+}
+```
+
 ![Health](https://github.com/strongloop/loopback-example-facade/blob/master/doc/health.png)
 
 ## Prerequisites
