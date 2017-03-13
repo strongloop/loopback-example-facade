@@ -12,7 +12,7 @@ http://localhost:3000/api/Accounts/summary?accountNumber=CHK52321122
 ```
 Health Check
 ```
-http://localhost:3004/api/Vitals
+$ docker inspect loopbackexamplefacade_facade_1 --format "{{json .State.Health }}"
 ```
 
 ## About
