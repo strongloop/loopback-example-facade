@@ -2,8 +2,18 @@
 
 var loopback = require('loopback');
 var boot = require('loopback-boot');
-
+var healthCheck = require('./health-check');
 var app = module.exports = loopback();
+var Promise = require('bluebird');
+
+app.get("/vitals", (req, res) => {
+  var services = healthCheck.checkHealth();
+  Promise.all(services).then(function(results) {
+    console.log(results);
+    res.json({ "status": "healthy", "dependencies": results});
+  });
+});
+
 
 app.start = function() {
   // start the web server
