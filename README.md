@@ -98,31 +98,26 @@ Most often business logic in SOA applications could be refactored into micro-ser
                URLs                                |         Desc 
    ------------------------------------------------|------------------------------------------
    POST: /RetailBanking/Accounts                   |  `AccountType = "Savings", "Checking"`  
-   GET: /RetailBanking/Accounts ?AccountNumber=    |
-   POST: /Wholesale/Accounts                       |  `AccountType = "Pension", "International"`
-   GET:  /Wholesale/Accounts ?AccountNumber=       |   
-   POST: /Commercial/Accounts                      | `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
-   GET:  /Commercial/Accounts ?AccountNumber=      |
-   POST: /Loan/Accounts                            | `AccountType = "Mortgage", "Personal"`
-   GET:  /Loan/Accounts ?AccountNumber=            |
+   GET:  /RetailBanking/Accounts ?AccountNumber=   |
    POST: /RetailBanking/Debit                      | 
    POST: /RetailBanking/Credit                     |
    POST: /RetailBanking/Cheques                    |
    POST: /Retailbanking/Deposit                    |
+   POST: /Loan/Accounts                            |  `AccountType = "Mortgage", "Personal"`
+   GET:  /Loan/Accounts ?AccountNumber=            |
    POST: /Loan/Payments                            |
+   POST: /Wholesale/Accounts                       |  `AccountType = "Pension", "International"`
+   GET:  /Wholesale/Accounts ?AccountNumber=       |   
+   POST: /Commercial/Accounts                      |  `AccountType = "CertificateOfDeposits", "LetterOfCredit"`
+   GET:  /Commercial/Accounts ?AccountNumber=      |
    POST: /Wholesale/LetterOfCredit                 |
    POST: /Customer/CashMonitoringReport            | accessible only to tellers
 
 
 * **Customer API:**
- * Provides models for users to create and query customers for all banking domains 
- * URLs
-   * POST: /Personal/Customer
-   * POST: /Business/Customer
-   * GET: /Personal/Customer ?CustomerNumber=
-   * GET: /Business/Customer ?CustomerNumber=
-
- * Data:
+   * Provides models for users to create and query customers for all banking domains 
+   * Data:
+   
   ```
   {
      "Address": "string",
@@ -130,6 +125,13 @@ Most often business logic in SOA applications could be refactored into micro-ser
      "Identification": "string"
   }
   ```
+
+               URLs                                |         Desc 
+   ------------------------------------------------|------------------------------------------
+   POST: /Personal/Customer                        |  `AccountType = "Savings", "Checking"`  
+   POST: /Business/Customer                        |
+   GET: /Personal/Customer ?CustomerNumber=        | 
+   GET: /Business/Customer ?CustomerNumber=        |
 
 
 ### Microservices 
