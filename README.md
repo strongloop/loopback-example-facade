@@ -8,11 +8,9 @@ $ docker-compose up --build
 $ curl -X GET --header 'Accept: application/json' 'http://localhost:3000/api/Accounts/summary?accountNumber=CHK52321122'
 ```
 
-
 ## About
 In this example, we create "Nano Bank" (a basic banking
 application) to demonstrate best practices for writing scalable Microservices using LoopBack.
-
 
 ## Microservice Architecture
 
@@ -21,14 +19,20 @@ application) to demonstrate best practices for writing scalable Microservices us
 
 In the diagram below, you can see the basic application architecture of the **Nano Bank** application.
 
- * **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications
- * **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices
- * **Microservices** - In principle, are micro applications, and provide a simple component oriented application development. In our architecture we have considered microservices (/microapplications) as the individual units of business logic and provide simple services for banking transactions and internal APIs. They encapsulate and abstract, legacy applications (internal core banking services) and other complex proprietery softwares in general referred to as `System of Records`. 
+ * **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications.
+ * **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices.
+ * **Microservices** - We have considered microservices as internal APIs or smaller services of business logic. They provide simple services for banking transactions. In principle, they are micro applications, and provide a simple component oriented application development. They encapsulate and abstract, complex legacy applications (internal SOA services) and other  proprietery softwares (core-banking, fraud management, cards applications, etc) in general referred to as `System of Records`. 
  * **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA). The extent of traditional SOA infrastructure required is based on the complexity of the legacy systems. SOA infact expanded out of the integration problem in legacy systems.
  * **System of Records** - Databases, mainframes, and other information systems 
 
 ![Application Architecture](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-arch.png)
 
+## Goals
+* **User innovation** : user applications in mobile/web must have easier access to banking services and automation through external APIs. eg: When booking flights through an airline's app, the user may have a credit card which gets them points from the banking institution as well as the payment service provider (eg: VISA, mastercard). If the airlines is able to claim the points of the purchase onbehalf of the consumer automatically through an external API, the consumer can use it to buy a lunch en-route free of charge. 
+
+* **Business innovation** : various departments within the bank like stores, consumer service, cash, treasury, risk, etc should be able to build business processes easily using internal API's.
+
+* **Service innovation** : Fine grained microservices would give technical excellence to the bank's IT, to provide easier, secure access to various resources available within the bank, as per internal security policies. eg: access to document repositories, fraud alerts, payment services, etc.
 
 ***Architectural Principles:***
 
