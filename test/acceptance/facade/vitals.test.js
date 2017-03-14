@@ -6,7 +6,7 @@ describe('facade - vitals', () => {
   const facadeUrl = 'http://localhost:3000';
 
   describe('GET /facade/vitals', () => {
-    it('returns the current health status of all microservices', () => {
+    it.skip('returns the current health status of all microservices', () => {
       return request({
         uri: facadeUrl + '/vitals',
         json: true

@@ -14,4 +14,7 @@ RUN npm install
 COPY . /usr/src/facade
 
 EXPOSE 3000
+
+HEALTHCHECK --interval=1m --timeout=3s CMD curl --fail http://0.0.0.0:80/vitals/docker || exit 1  
+
 CMD [ "node", "." ]
