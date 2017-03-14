@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/strongloop/loopback-example-facade/issues"
   },
-  "homepage": "https://github.com/strongloop/loopback-example-facade#readme"
+  "homepage": "https://github.com/strongloop/loopback-example-facade#readme",
+  "dependencies": {
+    "colors": "^1.1.2"
+  }
 }
