@@ -6,10 +6,6 @@ describe('facade - vitals', () => {
   const facadeUrl = 'http://localhost:3000';
 
   describe('GET /facade/vitals', () => {
-    // TODO(ritch/simon): Add pass criteria
-  });
-
-  describe('GET /facade/vitals/docker', () => {
     it('returns the current health status of all microservices', () => {
       return request({
         uri: facadeUrl + '/vitals',
@@ -46,4 +42,9 @@ describe('facade - vitals', () => {
       });
     });
   });
+
+  describe('GET /facade/vitals/docker', () => {
+    // TODO(ritch/simon): Add pass criteria
+  });
+
 });
