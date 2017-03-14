@@ -5,6 +5,18 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
+app.get("/vitals", (req, res) => {
+  console.log("service");
+  return res.json({ 
+    "status": "healthy", 
+    "dependencies": {
+      "transactionDB": {
+        "status": "healthy"
+      } 
+    }
+  });
+});
+
 app.start = function() {
   // start the web server
   return app.listen(function() {
