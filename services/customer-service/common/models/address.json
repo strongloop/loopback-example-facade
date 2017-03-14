@@ -1,0 +1,33 @@
+{
+  "name": "Address",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "customerId": {
+      "type": "string",
+      "id": true
+    },
+    "type": {
+      "type": "string"
+    },
+    "street": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "zip": {
+      "type": "string"
+    },
+    "lastUpdated": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "acls": []
+}
