@@ -9,8 +9,11 @@ var Promise = require('bluebird');
 app.get("/vitals", (req, res) => {
   var services = healthCheck.checkHealth();
   Promise.all(services).then(function(results) {
-    console.log(results);
-    res.json({ "status": "healthy", "dependencies": results});
+    var health = { "status": "healthy", dependencies:{}};
+    results.forEach(function(item) {
+      health.dependencies[item.path] = item.health;
+    });
+    res.json(health);
   });
 });
 
