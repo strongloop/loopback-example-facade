@@ -1,5 +1,14 @@
 version: '3'
 services:
+  cache:
+    build: ./services/mock-cache
+    image: loopback-example-facade/cache
+    ports:
+      - "3005:80"
+    networks:
+      app-net:
+        aliases:
+          - cache
   customer:
     build: ./services/customer-service
     image: loopback-example-facade/customer-service
@@ -36,6 +45,7 @@ services:
       - customer
       - account
       - transaction
+      - cache
     networks:
       app-net:
         aliases:
@@ -51,24 +61,11 @@ services:
       - account
       - transaction
       - facade
+      - cache
     networks:
       app-net:
         aliases:
           - vitals
-  mock-cache:
-    build: ./services/mock-cache
-    image: loopback-example-facade/mock-cache
-    ports:
-      - "3005:80"
-    links:
-      - customer
-      - account
-      - transaction
-      - facade
-    networks:
-      app-net:
-        aliases:
-          - mock-cache
 networks:
   app-net:
     driver: bridge

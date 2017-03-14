@@ -9,28 +9,28 @@ module.exports = function(Account) {
     let accountSummary = {};
     return services.findAccountSummary({id: accountNumber})
       .then(function(data) {
-        accountSummary = data.obj;
+        accountSummary = data;
         console.log(">>>>>>>>>>> retrieved account summary");
       })
       .then(function() {
         return services.findAccount({id: accountNumber})
       })
       .then(function(data) {
-        accountSummary.account = data.obj;
+        accountSummary.account = data;
         console.log(">>>>>>>>>>> retrieved account details");
       })
       .then(function() {
         return services.findCustomer({id: accountSummary.account.customerNumber})
       })
       .then(function(data) {
-        accountSummary.customer = data.obj;
+        accountSummary.customer = data;
         console.log(">>>>>>>>>>> retrieved customer details");
       })
       .then(function() {
         return services.findTransaction({accountNumber: accountNumber})
       })
       .then(function(data) {
-        accountSummary.transactions = data.obj;
+        accountSummary.transactions = data;
         console.log(">>>>>>>>>>> retrieved transaction details");
         return accountSummary;
       });
