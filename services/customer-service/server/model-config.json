@@ -16,5 +16,9 @@
   "Customer": {
     "dataSource": "db",
     "public": true
+  },
+  "Address": {
+    "dataSource": "db",
+    "public": true
   }
 }

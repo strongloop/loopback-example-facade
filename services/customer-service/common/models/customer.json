@@ -1,12 +1,14 @@
 {
   "name": "Customer",
-  "idInjection": true,
+  "idInjection": false,
   "options": {
     "validateUpsert": true
   },
   "properties": {
     "customerNumber": {
-      "type": "string"
+      "type": "string",
+      "id": true,
+      "required": true
     },
     "firstName": {
       "type": "string"
@@ -18,10 +20,18 @@
       "type": "string"
     },
     "customerSince": {
-      "type": "string"
+      "type": "date"
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "address": {
+      "type": "embedsMany",
+      "model": "Address",
+      "scope": {
+        "include": "linked"
+      }
+    }
+  },
   "acls": []
 }
