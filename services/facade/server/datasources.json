@@ -1,25 +1,21 @@
-{   "db": {
-        "name": "db",
-        "connector": "memory"
-    },
-    "customer": {
-        "name": "customer",
-        "connector": "swagger",
-        "spec": "http://customer/explorer/swagger.json"
-    },
-    "account": {
-        "name": "account",
-        "connector": "swagger",
-        "spec": "http://account/explorer/swagger.json"
-    },
-    "transaction": {
-        "name": "transaction",
-        "connector": "swagger",
-        "spec": "http://transaction/explorer/swagger.json"
-    },
-    "cache": {
-        "name": "cache",
-        "connector": "swagger",
-        "spec": "http://cache/explorer/swagger.json"
-    }
+{
+  "customer": {
+    "name": "customer",
+    "connector": "swagger",
+    "spec": "http://customer/explorer/swagger.json"
+  },
+  "account": {
+    "name": "account",
+    "connector": "swagger",
+    "spec": "http://account/explorer/swagger.json"
+  },
+  "transaction": {
+    "name": "transaction",
+    "connector": "swagger",
+    "spec": "http://transaction/explorer/swagger.json"
+  },
+  "shared-cache": {
+    "name": "shared-cache",
+    "connector": "kv-memory"
+  }
 }
