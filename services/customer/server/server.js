@@ -5,6 +5,10 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
+app.use((req, res, next) => {
+  setTimeout(next, 3000);
+});
+
 app.get("/vitals/docker", (req, res) => {
   res.send("ok");
 });

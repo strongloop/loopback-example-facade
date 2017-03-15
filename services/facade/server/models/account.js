@@ -7,6 +7,10 @@ const services = require('../../lib/services');
 // NOTE: View `console.log` output in the docker-compose logs
 
 module.exports = function(Account) {
+  Account.getAccountInfo = function(accountNumber) {
+    return services.findAccount(accountNumber);
+  }
+
   Account.getAccountSummary = function(accountNumber, cache) {
     const Cache = app.models.Cache;
 
