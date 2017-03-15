@@ -1,7 +1,6 @@
 'use strict';
 
 const app = require('../../server/server');
-const promise = require('bluebird');
 const services = require('../../lib/services');
 
 // NOTE: View `console.log` output in the docker-compose logs
