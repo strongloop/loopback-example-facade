@@ -12,29 +12,28 @@ module.exports = function(Account) {
     // DEMO(ritch): explain why url + acctNum instead of just acctNum
     const key = '/api/Account/summary?accountNumber=' + accountNumber;
 
-    console.log('checking the cache');
-    return Cache.get(key)
-      .then(accountSummary => {
-        if (accountSummary) {
-          return Cache.ttl(key).then(ttl => {
-            console.log('cache hit, return cache data, ttl:', ttl);
-            return accountSummary;
-          });
-        }
+    console.log('checking the facade level cache');
+    return Cache.get(key).then(accountSummary => {
+      if (accountSummary) {
+        return Cache.ttl(key).then(ttl => {
+          console.log('cache hit, return cache data, ttl:', ttl);
+          return accountSummary;
+        });
+      }
 
-        console.log('cache miss, get data from microservice');
-        return services.getAggregateAccountSummary(accountNumber)
-          .then(accountSummary => {
-            console.log('update cache with returned data');
-            // ttl should be short because some data changes often
-            // account aggressive infinite ttl at microservice level
-            // customer aggresive infinite ttl
-            // transaction non-aggressive very short ttl
-            // DEMO(ritch): change to 60s after, explain why 60s to crowd
-            return Cache.set(key, accountSummary, {ttl: 10000}) // 10s for testing
-              .return(accountSummary);
-          });
-      });
+      console.log('cache miss, get data from microservice');
+      return services.getAggregateAccountSummary(accountNumber)
+        .then(accountSummary => {
+          // ttl should be short because some data changes often
+          // account aggressive infinite ttl at microservice level
+          // customer aggresive infinite ttl
+          // transaction non-aggressive very short ttl
+          console.log('update cache with returned data');
+          // DEMO(ritch): change to 60s after, explain why 60s to crowd
+          return Cache.set(key, accountSummary, {ttl: 10000}) // 10s for testing
+            .return(accountSummary);
+        })
+    });
   };
 
   // Account.listAllAccounts = function(customerNumber, cb) {
