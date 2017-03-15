@@ -17,11 +17,11 @@
   },
   "homepage": "https://github.com/strongloop/loopback-example-facade#readme",
   "dependencies": {
-    "colors": "^1.1.2",
-    "debug": "^2.6.3"
+    "colors": "^1.1.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "debug": "^2.6.3",
     "dirty-chai": "^1.2.2",
     "mocha": "^3.2.0",
     "request": "^2.81.0",
