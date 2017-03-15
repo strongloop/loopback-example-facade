@@ -6,7 +6,7 @@ describe('facade - vitals', () => {
   const facadeUrl = 'http://localhost:3000';
 
   describe('GET /facade/vitals', () => {
-    it.skip('returns the current health status of all microservices', () => {
+    it('returns the current health status of all microservices', () => {
       return request({
         uri: facadeUrl + '/vitals',
         json: true
@@ -17,7 +17,7 @@ describe('facade - vitals', () => {
           account: {
             status: 'healthy',
             dependencies: {
-              db: {
+              accountDB: {
                 status: 'healthy'
               }
             }
@@ -25,7 +25,7 @@ describe('facade - vitals', () => {
           customer: {
             status: 'healthy',
             dependencies: {
-              db: {
+              customerDB: {
                 status: 'healthy'
               }
             }
@@ -33,7 +33,7 @@ describe('facade - vitals', () => {
           transaction: {
             status: 'healthy',
             dependencies: {
-              db: {
+              transactionDB: {
                 status: 'healthy'
               }
             }
@@ -44,13 +44,13 @@ describe('facade - vitals', () => {
   });
 
   describe('GET /facade/vitals/docker', () => {
-    it.skip('returns OK', () => {
+    it('returns OK', () => {
       return request({
         uri: facadeUrl + '/vitals/docker',
         json: true
       })
       .then(res => {
-        expect(res).to.equal('OK');
+        expect(res).to.equal('ok');
       });
     });
   });

@@ -15,10 +15,7 @@ app.get("/vitals", (req, res) => {
     "dependencies": {
       "customerDB": {
         "status": "healthy"
-      },
-      "internal-cache": {
-        "status": "unhealthy"
-      },
+      }
     }
   });
 });

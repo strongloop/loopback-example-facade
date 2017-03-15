@@ -7,16 +7,18 @@ const services = require('../../lib/services');
 // NOTE: View `console.log` output in the docker-compose logs
 
 module.exports = function(Account) {
-  Account.getAccountSummary = function(accountNumber) {
+  Account.getAccountSummary = function(accountNumber, cache) {
     const Cache = app.models.Cache;
+
     // DEMO(ritch): explain why url + acctNum instead of just acctNum
     const key = '/api/Account/summary?accountNumber=' + accountNumber;
 
     console.log('checking the facade level cache');
     return Cache.get(key).then(accountSummary => {
-      if (accountSummary) {
+      if (accountSummary && cache !== false) {
         return Cache.ttl(key).then(ttl => {
           console.log('cache hit, return cache data, ttl:', ttl);
+          accountSummary.cache = ttl;
           return accountSummary;
         });
       }
@@ -30,9 +32,9 @@ module.exports = function(Account) {
           // transaction non-aggressive very short ttl
           console.log('update cache with returned data');
           // DEMO(ritch): change to 60s after, explain why 60s to crowd
-          return Cache.set(key, accountSummary, {ttl: 10000}) // 10s for testing
+          return Cache.set(key, accountSummary, {ttl: 60000}) // 10s for testing
             .return(accountSummary);
-        })
+        });
     });
   };
 

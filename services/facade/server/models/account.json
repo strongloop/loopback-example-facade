@@ -40,6 +40,14 @@
           "http": {
             "source": "query"
           }
+        },
+        {
+          "arg": "cache",
+          "type": "boolean",
+          "description": "Enable the cache. Cache enabled by default.",
+          "http": {
+            "source": "query"
+          }
         }
       ],
       "returns": [
