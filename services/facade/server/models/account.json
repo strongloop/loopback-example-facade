@@ -66,13 +66,13 @@
         }
       ]
     },
-    "listAllAccounts": {
+    "getAccountByNumber": {
       "accepts": [
         {
-          "arg": "customerNumber",
+          "arg": "accountNumber",
           "type": "string",
           "required": true,
-          "description": "The customer",
+          "description": "The account number",
           "http": {
             "source": "path"
           }
@@ -80,16 +80,16 @@
       ],
       "returns": [
         {
-          "arg": "accountList",
-          "type": "array",
+          "arg": "account",
+          "type": "Account",
           "root": true,
-          "description": "The list of accountNumbers"
+          "description": "The account"
         }
       ],
-      "description": "List all the accounts for the given customerNumber",
+      "description": "Get the account for the given account number",
       "http": [
         {
-          "path": "/",
+          "path": "/:accountNumber",
           "verb": "get"
         }
       ]

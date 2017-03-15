@@ -63,7 +63,34 @@ module.exports.findAccountSummary = function(input) {
 
 module.exports.findAccount = function(input) {
   let find = accountService.getFunction('Account', 'findById');
-  return query({map: 'Account', key: input.accountNumber}, find, input);
+  const Cache = app.models.Cache;
+
+  // DEMO(ritch): explain why url + acctNum instead of just acctNum
+  const key = '/api/Accounts/' + input.accountNumber;
+
+  console.log('checking the facade level cache');
+  return Cache.get(key).then(accountInfo => {
+    if (accountInfo) {
+      return Cache.ttl(key).then(ttl => {
+        console.log('cache hit, return cache data, ttl:', ttl);
+        accountInfo.cache = ttl;
+        return accountInfo;
+      });
+    }
+
+    console.log('cache miss, get data from microservice');
+    return query({map: 'Account', key: input.accountNumber}, find, input)
+      .then(accountInfo => {
+        // ttl should be short because some data changes often
+        // account aggressive infinite ttl at microservice level
+        // customer aggresive infinite ttl
+        // transaction non-aggressive very short ttl
+        console.log('update cache with returned data');
+        // DEMO(ritch): change to 60s after, explain why 60s to crowd
+        return Cache.set(key, accountInfo, {ttl: 60000}) // 10s for testing
+          .return(accountInfo);
+      });
+  });
 };
 
 module.exports.findCustomer = function(input) {
