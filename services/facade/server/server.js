@@ -6,6 +6,11 @@ var healthCheck = require('./health-check');
 var app = module.exports = loopback();
 var Promise = require('bluebird');
 
+
+app.get("/vitals/docker", (req, res) => {
+  res.send("ok");
+});
+
 app.get("/vitals", (req, res) => {
   var services = healthCheck.checkHealth();
   Promise.all(services).then(function(results) {
