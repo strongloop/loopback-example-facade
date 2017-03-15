@@ -39,6 +39,6 @@ module.exports = function(Account) {
   };
 
   Account.getAccountByNumber = function(accountNumber) {
-   return services.findAccount({id: accountNumber});
+    return services.findAccount({id: accountNumber});
   };
 };
