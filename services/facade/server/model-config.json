@@ -16,5 +16,9 @@
   "Account": {
     "dataSource": null,
     "public": true
+  },
+  "Cache": {
+    "dataSource": "shared-cache",
+    "public": false
   }
 }
