@@ -9,7 +9,7 @@ function checkHealth(host, port, path) {
     port: port,
     path: path,
     method: 'GET'
-  }
+  };
   var req = http.request(httpOptions, function(response) {
     var str = '';
     response.on('data', function(chunk) {
@@ -59,45 +59,3 @@ function printDependencies(dependencies, depth) {
     if (info.dependencies) printDependencies(info.dependencies, depth + 1);
   });
 }
-
-const vitals = {
-  status: 'healthy',
-  dependencies: {
-    accounts: {
-      status: 'healthy',
-      dependencies: {
-        'accounts-redis': {
-          status: 'healthy'
-        },
-        'accounts-db': {
-          status: 'healthy'
-        }
-      }
-    },
-    transactions: {
-      status: 'unhealthy',
-      dependencies: {
-        'shared-redis': {
-          status: 'healthy'
-        },
-        'mongodb': {
-          status: 'unhealthy'
-        }
-      }
-    },
-    customers: {
-      status: 'healthy',
-      meta: {
-        memory: process.memoryUsage()
-      },
-      dependencies: {
-        'shared-redis': {
-          status: 'healthy'
-        },
-        internalService: {
-          status: 'healthy'
-        }
-      }
-    }
-  }
-};
