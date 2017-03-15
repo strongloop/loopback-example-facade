@@ -10,7 +10,6 @@ app.get("/vitals/docker", (req, res) => {
 });
 
 app.get("/vitals", (req, res) => {
-  console.log("service");
   return res.json({ 
     "status": "healthy", 
     "dependencies": {

@@ -44,7 +44,14 @@ describe('facade - vitals', () => {
   });
 
   describe('GET /facade/vitals/docker', () => {
-    // TODO(ritch/simon): Add pass criteria
+    it.skip('returns OK', () => {
+      return request({
+        uri: facadeUrl + '/vitals/docker',
+        json: true
+      })
+      .then(res => {
+        expect(res).to.equal('OK');
+      });
+    });
   });
-
 });
