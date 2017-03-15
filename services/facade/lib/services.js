@@ -21,6 +21,7 @@ function getAggregateAccountSummary(accountNumber) {
   // cache here too
   let accountSummary = {};
   return services.findAccountSummary({id: accountNumber})
+    .delay(3000) // intentional to make the microservice request "feel" slower since we are using memory connector
     .then(function(data) {
       accountSummary = data;
       console.log('>>>>>>>>>>> retrieved account summary');
@@ -48,8 +49,7 @@ function getAggregateAccountSummary(accountNumber) {
       accountSummary.transactions = data;
       console.log('>>>>>>>>>>> retrieved transaction details');
       return accountSummary;
-    })
-    .delay(3000); // intentional to make the microservice request "feel" slower since we are using memory connector
+    });
 }
 
 module.exports.findTransaction = function(input) {

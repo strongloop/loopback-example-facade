@@ -3,13 +3,11 @@ const expect = require('../../support/expect');
 const request = require('request-promise');
 
 describe('facade - account summary', () => {
-  const facadeUrl = 'http://localhost:3000';
-
   describe('GET /api/Accounts/summary?accountNumber=...', () => {
     it('returns the aggregated account info', () => {
       const accountNumber = 'CHK52321122';
       return request({
-        uri: `${facadeUrl}/api/Accounts/summary`,
+        uri: 'http://localhost:3000/api/Accounts/summary',
         qs: {
           accountNumber: accountNumber
         },
@@ -25,6 +23,6 @@ describe('facade - account summary', () => {
         expect(res.customer).to.be.an('object');
         expect(res.transactions).to.have.length(5);
       });
-    });
+    }).timeout(5000); // depends on delay set in microservice response
   });
 });
