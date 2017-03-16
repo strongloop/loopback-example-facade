@@ -13,6 +13,21 @@
     "customerNumber": {
       "type": "string",
       "required": true
+    },
+    "balance": {
+      "type": "number"
+    },
+    "branch": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "avgBalance": {
+      "type": "number"
+    },
+    "minimumBalance": {
+      "type": "number"
     }
   },
   "validations": [],

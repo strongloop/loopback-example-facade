@@ -16,9 +16,5 @@
   "Account": {
     "dataSource": "db",
     "public": true
-  },
-  "AccountSummary": {
-    "dataSource": "db",
-    "public": true
   }
 }
