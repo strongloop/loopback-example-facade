@@ -11,12 +11,9 @@ module.exports = function(Account) {
   };
 
   Account.getAccountSummary = async function(accountNumber, cache) {
+    console.log('checking shared cache');
     const Cache = app.models.Cache;
-
-    // DEMO(ritch): explain why url + acctNum instead of just acctNum
     const key = '/api/Account/summary?accountNumber=' + accountNumber;
-
-    console.log('checking facade level cache');
     let accountSummary = await Cache.get(key);
     if (accountSummary && cache !== false) {
       const ttl = await Cache.ttl(key);
@@ -37,13 +34,8 @@ module.exports = function(Account) {
       return Promise.props(accountSummary);
     });
 
-    console.log('update cache with returned data');
-    // ttl should be short because some data changes often
-    // account aggressive infinite ttl at microservice level
-    // customer aggresive infinite ttl
-    // transaction non-aggressive very short ttl
-    // DEMO(ritch): change to 60s after, explain why 60s to crowd
-    await Cache.set(key, accountSummary, {ttl: 60000}); // 10s for testing
+    console.log('update shared cache with returned data');
+    await Cache.set(key, accountSummary, {ttl: 60000});
 
     return accountSummary;
   };
