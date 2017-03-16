@@ -5,6 +5,7 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
+// intentional delay to simulate slow microservice
 app.use((req, res, next) => {
   setTimeout(next, 3000);
 });
