@@ -28,10 +28,11 @@ module.exports = function(Account) {
       account: Account.getAccount(accountNumber),
       transactions: app.models.Transaction.find(accountNumber),
     })
-    .then(accountSummary => {
+    .then(data => {
       const {Customer} = app.models;
-      accountSummary.customer = Customer.findById(accountSummary.account.customerNumber);
-      return Promise.props(accountSummary);
+      const customerNumber = data.account.customerNumber;
+      data.customer = Customer.find(customerNumber);
+      return Promise.props(data);
     });
 
     console.log('update shared cache with returned data');
