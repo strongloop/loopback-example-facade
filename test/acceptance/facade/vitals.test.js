@@ -13,11 +13,9 @@ describe('facade - vitals', () => {
       })
       .then(res => {
         expect(res.status).to.equal('healthy');
-        expect(res.latency).to.be.number();
         expect(res.dependencies).to.eql({
           account: {
             status: 'healthy',
-            latency: 1000,
             dependencies: {
               accountDB: {
                 status: 'healthy'
@@ -26,7 +24,6 @@ describe('facade - vitals', () => {
           },
           customer: {
             status: 'healthy',
-            latency: 1000,
             dependencies: {
               customerDB: {
                 status: 'healthy'
@@ -35,7 +32,6 @@ describe('facade - vitals', () => {
           },
           transaction: {
             status: 'healthy',
-            latency: 1000,
             dependencies: {
               transactionDB: {
                 status: 'healthy'

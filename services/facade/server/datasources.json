@@ -2,20 +2,36 @@
   "account": {
     "name": "account",
     "connector": "swagger",
-    "spec": "http://account/explorer/swagger.json"
+    "spec": "http://account/explorer/swagger.json",
+    "cache": {
+      "model": "AccountCache",
+      "ttl": 60000
+    }
   },
   "customer": {
     "name": "customer",
     "connector": "swagger",
-    "spec": "http://customer/explorer/swagger.json"
+    "spec": "http://customer/explorer/swagger.json",
+    "cache": {
+      "model": "CustomerCache",
+      "ttl": 60000
+    }
   },
   "transaction": {
     "name": "transaction",
     "connector": "swagger",
-    "spec": "http://transaction/explorer/swagger.json"
+    "spec": "http://transaction/explorer/swagger.json",
+    "cache": {
+      "model": "TransactionCache",
+      "ttl": 60000
+    }
   },
   "shared-cache": {
     "name": "shared-cache",
+    "connector": "kv-memory"
+  },
+  "private-cache": {
+    "name": "private-cache",
     "connector": "kv-memory"
   }
 }

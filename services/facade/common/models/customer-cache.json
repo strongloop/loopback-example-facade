@@ -1,0 +1,9 @@
+{
+  "name": "CustomerCache",
+  "base": "KeyValueModel",
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
