@@ -16,6 +16,7 @@
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^4.0.0",
     "loopback-connector-swagger": "strongloop/loopback-connector-swagger#feature/cache-get-requests",
+    "morgan": "^1.7.0",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^1.0.1"
   },
