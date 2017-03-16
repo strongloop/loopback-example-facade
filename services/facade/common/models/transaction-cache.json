@@ -1,0 +1,9 @@
+{
+  "name": "TransactionCache",
+  "base": "KeyValueModel",
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

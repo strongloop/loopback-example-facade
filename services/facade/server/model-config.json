@@ -21,12 +21,24 @@
     "dataSource": "shared-cache",
     "public": false
   },
+  "AccountCache": {
+    "dataSource": "private-cache",
+    "public": false
+  },
   "Customer": {
     "dataSource": "customer",
     "public": false
   },
+  "CustomerCache": {
+    "dataSource": "private-cache",
+    "public": false
+  },
   "Transaction": {
     "dataSource": "transaction",
+    "public": false
+  },
+  "TransactionCache": {
+    "dataSource": "private-cache",
     "public": false
   }
 }
