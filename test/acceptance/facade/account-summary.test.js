@@ -15,12 +15,19 @@ describe('facade - account summary', () => {
       })
       .then(res => {
         debug(res);
-        expect(res.accountNumber).to.equal(accountNumber);
         expect(res.account).to.eql({
           accountNumber: accountNumber,
-          customerNumber: '000343223',
+          avgBalance: 398.93,
+          balance: 85.84,
+          branch: 'Foster City',
+          minimumBalance: 10,
+          type: 'Checking',
         });
-        expect(res.customer).to.be.an('object');
+        expect(res.customer).to.containSubset({
+          customerNumber: '000343223',
+          firstName: 'Homer',
+          lastName: 'Simpson',
+        });
         expect(res.transactions).to.have.length(5);
       });
     });
