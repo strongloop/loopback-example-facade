@@ -23,6 +23,6 @@ describe('facade - account summary', () => {
         expect(res.customer).to.be.an('object');
         expect(res.transactions).to.have.length(5);
       });
-    }).timeout(5000); // depends on delay set in microservice response
+    });
   });
 });
