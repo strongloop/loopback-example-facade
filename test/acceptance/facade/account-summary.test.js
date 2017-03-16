@@ -20,6 +20,7 @@ describe('facade - account summary', () => {
           avgBalance: 398.93,
           balance: 85.84,
           branch: 'Foster City',
+          customerNumber: '000343223',
           minimumBalance: 10,
           type: 'Checking',
         });
