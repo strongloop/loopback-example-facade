@@ -14,11 +14,19 @@
     ]
   },
   "Account": {
-    "dataSource": null,
+    "dataSource": "account",
     "public": true
   },
   "Cache": {
     "dataSource": "shared-cache",
+    "public": false
+  },
+  "Customer": {
+    "dataSource": "customer",
+    "public": false
+  },
+  "Transaction": {
+    "dataSource": "transaction",
     "public": false
   }
 }

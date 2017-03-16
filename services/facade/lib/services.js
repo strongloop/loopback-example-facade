@@ -33,16 +33,14 @@ function getAggregateAccountSummary(accountNumber) {
       console.log('>>>>>>>>>>> retrieved account details');
     })
     .then(function() {
-      return services.findCustomer({
-        id: accountSummary.account.customerNumber,
-      });
+      return app.models.Customer.findById(accountSummary.account.customerNumber);
     })
     .then(function(data) {
       accountSummary.customer = data;
       console.log('>>>>>>>>>>> retrieved customer details');
     })
     .then(function() {
-      return services.findTransaction({accountNumber: accountNumber});
+      return app.models.Transaction.find(accountNumber);
     })
     .then(function(data) {
       accountSummary.transactions = data;
@@ -100,7 +98,7 @@ module.exports.findCustomer = function(input) {
 
 function getFunction(model, method) {
   let functionName = model + '_' + method;
-  return Promise.promisify(this.createModel(model, {})[functionName]);
+  return this.createModel(model, {})[functionName];
 }
 
 function query(input, fn, fnInput) {
