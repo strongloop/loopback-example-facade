@@ -1,11 +1,37 @@
 'use strict';
 
 const app = require('../../server/server');
-const services = require('../../lib/services');
 
 // NOTE: View `console.log` output in the docker-compose logs
 
 module.exports = function(Account) {
+  function getAggregateAccountSummary(accountNumber) {
+    let accountSummary = {};
+    return Account.AccountSummary_findById({id: accountNumber}).get('obj')
+      .then(function (data) {
+        accountSummary = data;
+      })
+      .then(function () {
+        return Account.Account_findById({id: accountNumber}).get('obj');
+      })
+      .then(function (data) {
+        accountSummary.account = data;
+      })
+      .then(function () {
+        return app.models.Customer.findById(accountSummary.account.customerNumber);
+      })
+      .then(function (data) {
+        accountSummary.customer = data;
+      })
+      .then(function () {
+        return app.models.Transaction.find(accountNumber);
+      })
+      .then(function (data) {
+        accountSummary.transactions = data;
+        return accountSummary;
+      });
+  }
+
   Account.getAccountSummary = function(accountNumber, cache) {
     const Cache = app.models.Cache;
 
@@ -23,7 +49,7 @@ module.exports = function(Account) {
       }
 
       console.log('cache miss, get data from microservice');
-      return services.getAggregateAccountSummary(accountNumber)
+      return getAggregateAccountSummary(accountNumber)
         .then(accountSummary => {
           // ttl should be short because some data changes often
           // account aggressive infinite ttl at microservice level
@@ -38,6 +64,6 @@ module.exports = function(Account) {
   };
 
   Account.getAccountByNumber = function(accountNumber) {
-    return services.findAccount({id: accountNumber});
+    return Account.Account_findById({id: accountNumber}).get('obj');
   };
 };
