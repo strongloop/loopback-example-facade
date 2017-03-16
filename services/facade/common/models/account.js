@@ -25,7 +25,7 @@ module.exports = function(Account) {
     console.log('cache miss, retrieve data from microservices');
     const {Transaction} = app.models;
     accountSummary = await Promise.props({
-      account: Account.Account_findById({id: accountNumber}).get('obj'),
+      account: Account.getAccount(accountNumber),
       transactions: app.models.Transaction.find(accountNumber),
     })
     .then(accountSummary => {
