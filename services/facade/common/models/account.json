@@ -31,7 +31,7 @@
   "acls": [],
   "methods": {
     "getAccount": {
-      "description": "Get the account for the given account number",
+      "description": "Get the account for the given account number.",
       "http": {
         "path": "/:accountNumber",
         "verb": "get"
@@ -40,7 +40,7 @@
           "arg": "accountNumber",
           "type": "string",
           "required": true,
-          "description": "The account number",
+          "description": "The account number. (Eg. CHK52321122)",
           "http": {"source": "path"}
       },
       "returns": {
