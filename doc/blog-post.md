@@ -23,20 +23,8 @@ $ docker inspect loopbackexamplefacade_facade_1 --format "{{json .State.Health }
 In this example, we create "Nano Bank" (a basic banking
 application) to demonstrate best practices for writing scalable Microservices using LoopBack.
 
-## Microservice Architecture
 
-> "a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API"
-> - [Martin Fowler (on Microservices)](https://martinfowler.com/articles/microservices.html)
-
-In the diagram below, you can see the basic application architecture of the **Nano Bank** application.
-
- * **Clients** (in blue) - "Tablet App", "Phone App", "Web App" - represent potential channel specific client applications.
- * **Facade** - The API's that provide public facing interfaces. They orchestrate the discrete Microservices.
- * **Microservices** - We have considered microservices as internal APIs or smaller services of business logic. They provide simple services for banking transactions. In principle, they are micro applications, and provide a simple component oriented application development. They encapsulate and abstract, complex legacy applications (internal SOA services) and other  proprietery softwares (core-banking, fraud management, cards applications, etc) in general referred to as `System of Records`. 
- * **Internal Services** - Existing services (mostly SOAP, REST, and proprietary HTTP) that accomplishes the goals of a Service Oriented Architecture(SoA). The extent of traditional SOA infrastructure required is based on the complexity of the legacy systems. SOA infact expanded out of the integration problem in legacy systems.
- * **System of Records** - Databases, mainframes, and other information systems 
-
-![Application Architecture](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-arch.png)
+**Architectural Guidelines:**
 
 ## Goals
 * **User innovation** : user applications in mobile/web must have easier access to banking services and automation through external APIs. eg: When booking flights through an airline's app, the user may have a credit card which gets them points from the banking institution as well as the payment service provider (eg: VISA, mastercard). If the airlines is able to claim the points of the purchase onbehalf of the consumer automatically through an external API, the consumer can use it to buy a lunch en-route free of charge. 
@@ -44,22 +32,6 @@ In the diagram below, you can see the basic application architecture of the **Na
 * **Business innovation** : various departments within the bank like stores, consumer service, cash, treasury, risk, etc should be able to build business processes easily using internal API's. eg: When building a latest analytics system within treasury, the design may require data feeds from securities, payments, cash reporting, accounts, etc. The designers must have easier access to data and services within the bank.
 
 * **Service innovation** : Fine grained microservices would give technical excellence to the bank's IT, to provide easier, secure access to various resources available within the bank, as well as make faster design changes. eg: access to document repositories, cash reports, fraud alerts, payment services, etc.
-
-***Architectural Principles:***
-
-**1) One way dependencies**
-
-Each arrow represents the direction of coupling. Eg. the facade must know about the Account service API, but not the other way around. Microservices should not depend on the facade/API layer, more on why below.
-
-**2) Simple and Purposeful Interfaces**
-
-The facade provides easy standard business models as APIs for the users like, POST:/Retail/Account, (to create a checking account) and act as a mediator, simple orchestrator and data aggregator. It treats its clients (eg. a mobile application) as the first class citizen. This could mean providing coarse grain APIs like, POST:/Retail/PayPalPayment (to complete shopping online and make payment via paypal authentication) that are purpose designed allowing mobile clients to access data without having to do much aggregation. In some cases this also mean providing very fine grain APIs that allow almost database like access, allowing client applications to provide more rich / interactive experiences. This doesn't mean the facade should be complex because it doesn't include any business logic; it only provides specific interfaces. The facade pattern used in this example allows for each service to be simple and focused, interacting in a reliable and scalable way.
-
-**3) Isolated Microservices**
-
-Microservices implements business logic and provides internal services or internal APIs, like debit an account, create Ach Transaction, validate cheque fraudevents, etc. Microservices need to use the best tools available across different plaforms and runtimes to give a consistent service abstraction. Microservices are hence PolyGlot services and could use multiple languages and runtimes within the same application domain. In Microservices Architecture, fine grained services allow APIs to securely access many resources and tools with agility.
-
-**Architectural Guidelines:**
 
 SOA has been the prominent framework to provide business services until microservices arrived. Transition from a complete SOA implementation to Microservices will need a lot of thought about redesign and will have certain pain points. If the business logic could be separated from the integration problems, Microservices could be considered as an improvement of SOA in aspects of business services, though the driving idea behind microservices is different. 
 [There are some articles discussing on how SOA can exist with microservices] (https://www.ibm.com/developerworks/websphere/library/techarticles/1601_clark-trs/1601_clark.html)
@@ -91,72 +63,6 @@ Most often business logic in SOA applications could be refactored into micro-ser
   * Microservices focus on business innovation
   * Facade/External APIs focus on user innovation
 
-
-### Caching
-
-This example demonstrates two styles of Microservice caching. **Public** - sharing a cache between multiple services and **Private** - isolated caching, one cache per service.
-
-![Caching](https://github.com/strongloop/loopback-example-facade/blob/master/doc/request-caching.png)
-
-**How to choose which style of cache to use?**
-
-In the diagram above you can see where each type of caching is appropriate. As requests flow from top to bottom, caching should become less aggressive. At the lower layers, data consistency is more important than performance. At the higher levels, eg. the facade and API gateway, caching can be much more aggressive. As mentioned above, the facade layer should not have any business logic. This means data at this layer does not have the same consistency requirements as data in the lower tiers.
-
-Microservices should be isolated. When possible this should be applied to their dependencies, in this case their cache. Isolation allows you to develop services independently and quickly. Rebuilding services becomes much simpler this way, since there aren't shared contracts for a shared cache.
-
-**Public Cache Example**
-
-
-DataPower Assembly (API Gateway)
-
-```yaml
-- invoke:
-  title: Get quote for given symbol
-  target-url: WXS://grid/read?key=/symbols/{symbol}
-```
-
-LoopBack Application (Facade)
-
-```js
-const messageBroker = new Client(connectionInfo, Adapter); // strong-pubsub
-messageBroker.subscribe('/symbols/*');
-messageBroker.on('message', setPriceForSymbol);
-
-function setPriceForSymbol(topic, price) {
-  Cache.set(topic, price);
-}
-```
-
-The example above demonstrates the Facade and API Gateway sharing the same cache to allow the gateway to access dynamic data (stock prices changing) without the cost of an extra HTTP request.
-
-**Private Cache Example**
-```js
-// server/mixins/cache-queries.js
-module.exports = function(Model, options) {
-  CachedModel.on('dataAccessConfigured', function() {
-    const Model = this;
-    Model._findLive = CachedModel.find;
-    Model.find = async (filter, options) => {
-      const key = getKeyForFilter(filter);
-      var cached = await Cache.get(key);
-      if (cached) 
-        return Promise.resolve(cached);
-      else
-        return Model._findLive(filter, options);
-    };
-  });
-};
-```
-
-The private cache example, demonstrates a simple caching layer for an individual microservice. The details of `getKeyForFilter`, how the cached data is stored (eg. JSON) and all other concerns need to be understood only by this service.
-
-**TTL**
-
-  - ttl
-   - data that doesn't change often should be cached with a ttl that reflects a longer time / usage
-   - data that changes often should be cached with a shorter ttl
-  - consistency (only in SoR) vs highly dynamic (only in cache)
-    - what makes it hard is the grey area in between 
 
 ### Health
 
