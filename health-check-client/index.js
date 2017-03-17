@@ -1,7 +1,7 @@
 var colors = require('colors');
 var http = require('http');
 
-checkHealth('localhost', 3000, '/vitals');
+checkHealth('localhost', 3000, '/api/Vitals');
 
 function checkHealth(host, port, path) {
   var httpOptions = {

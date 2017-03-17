@@ -14,11 +14,15 @@
     ]
   },
   "Customer": {
-    "dataSource": "db",
+    "dataSource": "CustomerDB",
     "public": true
   },
   "Address": {
-    "dataSource": "db",
+    "dataSource": "CustomerDB",
+    "public": true
+  },
+  "Vital": {
+    "dataSource": null,
     "public": true
   }
 }

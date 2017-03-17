@@ -1,6 +1,6 @@
 {
-  "db": {
-    "name": "db",
+  "AccountDB": {
+    "name": "AccountDB",
     "connector": "memory",
     "file": "data.json"
   }

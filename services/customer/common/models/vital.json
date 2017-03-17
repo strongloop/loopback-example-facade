@@ -1,0 +1,31 @@
+{
+  "name": "Vital",
+  "idInjection": false,
+  "base": "Model",
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "check": {
+      "returns": [
+        {
+          "arg": "vitals",
+          "type": "Object",
+          "root": true,
+          "description": "health check"
+        }
+      ],
+      "description": "do health check",
+      "http": [
+        {
+          "path": "/",
+          "verb": "get"
+        }
+      ]
+    }
+  }
+}

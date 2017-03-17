@@ -1,5 +1,5 @@
 {
-  "db": {
+  "TransactionDB": {
     "name": "db",
     "connector": "memory",
     "file": "data.json"

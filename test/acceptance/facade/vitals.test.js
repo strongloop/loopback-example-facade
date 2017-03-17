@@ -8,37 +8,20 @@ describe('facade - vitals', () => {
   describe('GET /facade/vitals', () => {
     it('returns the current health status of all microservices', () => {
       return request({
-        uri: facadeUrl + '/vitals',
+        uri: facadeUrl + '/api/Vitals',
         json: true
       })
       .then(res => {
         expect(res.status).to.equal('healthy');
-        expect(res.dependencies).to.eql({
-          account: {
-            status: 'healthy',
-            dependencies: {
-              accountDB: {
-                status: 'healthy'
-              }
-            }
-          },
-          customer: {
-            status: 'healthy',
-            dependencies: {
-              customerDB: {
-                status: 'healthy'
-              }
-            }
-          },
-          transaction: {
-            status: 'healthy',
-            dependencies: {
-              transactionDB: {
-                status: 'healthy'
-              }
-            }
-          },
-        });
+        expect(res.dependencies.Account.status).to.equal('healthy');
+        expect(res.dependencies.Customer.status).to.equal('healthy');
+        expect(res.dependencies.Transaction.status).to.equal('healthy');
+        expect(res.dependencies.Account.dependencies).to.deep.equal({
+          AccountDB: { status: 'healthy' } });
+        expect(res.dependencies.Customer.dependencies).to.deep.equal({
+          CustomerDB: { status: 'healthy' } });
+        expect(res.dependencies.Transaction.dependencies).to.deep.equal({
+          TransactionDB: { status: 'healthy' } });
       });
     });
   });
