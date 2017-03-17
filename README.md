@@ -2,7 +2,7 @@
 
 ## The App
 
-![](https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-mock.png?raw=true | width=300)
+<img src="https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-mock.png?raw=true" width="300" />
 
 ## Try it out
 
