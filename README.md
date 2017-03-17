@@ -19,21 +19,19 @@ $ docker-compose up --build
 **Make a request to get the account summary screen data.**
 
 ```
-bin/get-account-summary
+$ bin/get-account-summary
 ```
 
 **Run the System Status Health Check**
 
 ```
-node health-check-client
+$ node health-check-client
 ```
 
-## About
-In this example, we create "Nano Bank" (a basic banking
-application) to demonstrate best practices for writing scalable Microservices using LoopBack.
+## More Info
 
-## Microservice Architecture
-
-> "a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API"
-> - [Martin Fowler (on Microservices)](https://martinfowler.com/articles/microservices.html)
-
+ - [What are Microservices?](https://github.com/strongloop/loopback-example-facade/wiki/What-are-Microservices%3F)
+ - [The Microservice Facade Pattern](https://github.com/strongloop/loopback-example-facade/wiki/The-Microservice-Facade-Pattern)
+ - [Caching Strategies](https://github.com/strongloop/loopback-example-facade/wiki/Caching-Strategieshttps://github.com/strongloop/loopback-example-facade/wiki/Health-Checks-and-System-Status)
+ - [Health Checks and System Status](https://github.com/strongloop/loopback-example-facade/wiki/Health-Checks-and-System-Status)
+ - [Transforming your Architecture](https://github.com/strongloop/loopback-example-facade/wiki/Transforming-your-Architecture)
