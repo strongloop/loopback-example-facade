@@ -14,7 +14,11 @@
     ]
   },
   "Transaction": {
-    "dataSource": "db",
+    "dataSource": "TransactionDB",
+    "public": true
+  },
+  "Vital": {
+    "dataSource": null,
     "public": true
   }
 }

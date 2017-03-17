@@ -14,7 +14,7 @@
     ]
   },
   "Account": {
-    "dataSource": "db",
+    "dataSource": "AccountDB",
     "public": true
   },
   "Vital": {

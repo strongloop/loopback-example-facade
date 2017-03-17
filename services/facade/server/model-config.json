@@ -40,5 +40,9 @@
   "TransactionCache": {
     "dataSource": "private-cache",
     "public": false
+  },
+  "Vital": {
+    "dataSource": null,
+    "public": true
   }
 }

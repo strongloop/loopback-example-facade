@@ -13,17 +13,6 @@ app.get("/vitals/docker", (req, res) => {
   res.send("ok");
 });
 
-app.get("/vitals", (req, res) => {
-  return res.json({ 
-    "status": "healthy", 
-    "dependencies": {
-      "transactionDB": {
-        "status": "healthy"
-      } 
-    }
-  });
-});
-
 app.start = function() {
   // start the web server
   return app.listen(function() {
