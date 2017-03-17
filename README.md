@@ -1,7 +1,5 @@
 # loopback-example-facade
 
-## The App
-
 This example demonstrates the **Microservice Facade Pattern**. It includes **four LoopBack applications** that implement the API that provides the data for the screen mocked up below.
 
 <img src="https://github.com/strongloop/loopback-example-facade/blob/master/doc/app-mock.png?raw=true" width="300" />
