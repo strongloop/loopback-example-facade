@@ -2,7 +2,7 @@
 
 This example demonstrates best practices for building scalable Microservices.
 
- - [What are Microservices?](https://github.com/strongloop/loopback-example-facade/wiki/What-are-Microservices%3F)
+ - [The Interaction Tier](https://github.com/strongloop/loopback-example-facade/wiki/The-Interaction-Tier)
  - [The Microservice Facade Pattern](https://github.com/strongloop/loopback-example-facade/wiki/The-Microservice-Facade-Pattern)
  - [Caching Strategies](https://github.com/strongloop/loopback-example-facade/wiki/Caching-Strategieshttps://github.com/strongloop/loopback-example-facade/wiki/Health-Checks-and-System-Status)
  - [Health Checks and System Status](https://github.com/strongloop/loopback-example-facade/wiki/Health-Checks-and-System-Status)
