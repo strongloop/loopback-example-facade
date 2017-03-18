@@ -54,8 +54,15 @@ function printDependencies(dependencies, depth) {
     } else {
       prefix += '├──'
     }    
-
-    console.log(` ${prefix} ${name.white} (${status})`);
+    let latency;
+    if (info.latency) {
+      latency = info.latency.toString();
+    }
+    if(latency) {
+      console.log(` ${prefix} ${name.white} (${status}) ${'latency'.yellow}: ${latency.green}`);
+    } else {
+      console.log(` ${prefix} ${name.white} (${status})`);
+    }
     if (info.dependencies) printDependencies(info.dependencies, depth + 1);
   });
 }

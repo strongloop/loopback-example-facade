@@ -17,11 +17,12 @@ module.exports = function(Vital) {
   };
   function checkVital(model) {
     if(model.Vital_check) {
-      console.log(model.Vital_check);
       return new Promise(function(resolve, reject) {
+        var startTime = new Date();
         model.Vital_check(function(result) {
+          var totalTime = new Date() - startTime;
           if (result.status !== 200) return resolve({status: 'unhealthy'});
-          resolve(result.obj);
+          resolve(Object.assign(result.obj, {latency: totalTime/1000}));
         });
       });
     }
