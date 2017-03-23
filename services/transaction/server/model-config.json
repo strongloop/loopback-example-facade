@@ -20,5 +20,9 @@
   "Vital": {
     "dataSource": null,
     "public": true
+  },
+  "Cheque": {
+    "dataSource": "mongoDs",
+    "public": true
   }
 }

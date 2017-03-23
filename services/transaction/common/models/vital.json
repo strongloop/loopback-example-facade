@@ -1,7 +1,7 @@
 {
   "name": "Vital",
-  "idInjection": false,
   "base": "Model",
+  "idInjection": false,
   "options": {
     "validateUpsert": true
   },
