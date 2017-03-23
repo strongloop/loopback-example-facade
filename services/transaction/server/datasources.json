@@ -1,7 +1,12 @@
 {
   "TransactionDB": {
-    "name": "db",
+    "name": "TransactionDB",
     "connector": "memory",
     "file": "data.json"
+  },
+  "mongoDs": {
+    "host": "mongo",
+    "port": 27017,
+    "connector": "mongodb"
   }
 }

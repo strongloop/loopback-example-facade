@@ -24,3 +24,9 @@ services:
     image: loopback-example-facade/transaction
     ports:
       - "3003:80"
+  mongo:
+    image: mongo
+    volumes:
+      - /usr/local/var/mongodb:/data/db
+    ports:
+      - "27017:27017"

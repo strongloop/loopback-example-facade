@@ -2,7 +2,9 @@
   "initial:before": {
     "loopback#favicon": {},
     "morgan": {
-      "params": ["dev"]
+      "params": [
+        "dev"
+      ]
     }
   },
   "initial": {
