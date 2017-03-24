@@ -22,7 +22,7 @@
     "public": true
   },
   "Cheque": {
-    "dataSource": "mongoDs",
+    "dataSource": "mongoService",
     "public": true
   }
 }

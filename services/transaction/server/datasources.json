@@ -4,7 +4,7 @@
     "connector": "memory",
     "file": "data.json"
   },
-  "mongoDs": {
+  "mongoService": {
     "host": "mongo",
     "port": 27017,
     "connector": "mongodb"
