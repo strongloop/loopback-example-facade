@@ -1,6 +1,6 @@
 # loopback-example-facade
 
-This example demonstrates best practices for building scalable Microservices.
+This example demonstrates best practices for building scalable Microservices. [See the slides](https://www.slideshare.net/RitchieMartori/scaling-your-microservices-with-loopback) for an overview.
 
  - [The Interaction Tier](https://github.com/strongloop/loopback-example-facade/wiki/The-Interaction-Tier)
  - [The Microservice Facade Pattern](https://github.com/strongloop/loopback-example-facade/wiki/The-Microservice-Facade-Pattern)
