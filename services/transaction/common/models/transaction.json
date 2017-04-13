@@ -7,8 +7,8 @@
   "properties": {
     "TransactionId": {
       "type": "string",
-      "required": true,
-      "id": true 
+      "id": true,
+      "required": true
     },
     "dateTime": {
       "type": "date",
@@ -27,6 +27,9 @@
       "required": true
     }
   },
+  "validations": [],
+  "relations": {},
+  "acls": [],
   "methods": {
     "queryByAccount": {
       "accepts": [
@@ -56,8 +59,5 @@
         }
       ]
     }
-  },
-  "validations": [],
-  "relations": {},
-  "acls": []
+  }
 }
