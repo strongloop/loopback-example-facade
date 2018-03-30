@@ -9,21 +9,32 @@ services:
       - account
       - customer
       - transaction
+    depends_on:
+      - mongo
+      - account
+      - customer
+      - transaction
   customer:
     build: ./services/customer
     image: loopback-example-facade/customer-service
     ports:
       - "3001:80"
+    depends_on:
+      - mongo
   account:
     build: ./services/account
     image: loopback-example-facade/account-service
     ports:
       - "3002:80"
+    depends_on:
+      - mongo
   transaction:
     build: ./services/transaction
     image: loopback-example-facade/transaction
     ports:
       - "3003:80"
+    depends_on:
+      - mongo
   mongo:
     image: mongo
     volumes:
