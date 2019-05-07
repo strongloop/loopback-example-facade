@@ -1,3 +1,6 @@
+// Copyright IBM Corp. 2017. All Rights Reserved.
+// Node module: loopback-example-facade
+
 const app = require('../../server/server');
 const Promise = require('bluebird');
 
