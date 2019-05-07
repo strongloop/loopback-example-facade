@@ -1,3 +1,6 @@
+// Copyright IBM Corp. 2017. All Rights Reserved.
+// Node module: loopback-example-facade
+
 const debug = require('debug')('loopback:test:vitals');
 const expect = require('../../support/expect');
 const request = require('request-promise');

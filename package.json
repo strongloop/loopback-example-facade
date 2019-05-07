@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/strongloop/loopback-example-facade.git"
   },
-  "author": "",
+  "author": "IBM Corp.",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/strongloop/loopback-example-facade/issues"
