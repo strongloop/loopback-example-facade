@@ -1,5 +1,7 @@
 # loopback-example-facade
 
+**⚠️ This LoopBack 3 example project is no longer maintained. Please refer to [LoopBack 4 Examples](https://loopback.io/doc/en/lb4/Examples.html) instead. ⚠️**
+
 This example demonstrates best practices for building scalable Microservices. [See the slides](https://www.slideshare.net/RitchieMartori/scaling-your-microservices-with-loopback) for an overview.
 
  - [The Interaction Tier](https://github.com/strongloop/loopback-example-facade/wiki/The-Interaction-Tier)
